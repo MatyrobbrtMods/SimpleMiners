@@ -7,8 +7,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.RegistryOps;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @RegisterPack("default")
 public class DefaultPackGenerator implements PackGenerator {
@@ -21,14 +19,8 @@ public class DefaultPackGenerator implements PackGenerator {
         gen.addProvider(sides.includeServer(), new DefaultMinerTags(gen, helper));
 
         gen.addProvider(sides.includeClient(), new DefaultPackAssets(gen, helper));
+
+        gen.addProvider(true, new DefaultMinersProvider(gen));
     }
 
-    @SubscribeEvent
-    static void onEvent(final GatherDataEvent event) {
-        if (!Boolean.getBoolean("simpleminers.enableDPGeneration")) return;
-
-        final var gen = event.getGenerator();
-
-
-    }
 }

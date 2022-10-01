@@ -18,7 +18,11 @@ public record MinerType(String name, EnergyInfo energy, int ticksPerOperation, i
         return BLOCKS.get(name);
     }
 
-    public record EnergyInfo(boolean enabled, int capacity, int ioRate, int usagePerTick) {}
+    public record EnergyInfo(boolean enabled, int capacity, int ioRate, int usagePerTick) {
+        public EnergyInfo(int usagePerTick) {
+            this(true, usagePerTick * 100, usagePerTick * 10, usagePerTick);
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {

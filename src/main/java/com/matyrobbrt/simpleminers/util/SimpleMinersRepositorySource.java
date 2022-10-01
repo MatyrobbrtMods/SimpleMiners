@@ -140,7 +140,7 @@ public class SimpleMinersRepositorySource implements RepositorySource {
     public void copyDefaults(Path source) {
         final Path target = directory.toPath().resolve("builtin");
 
-        try (final Stream<Path> files = Files.walk(target)) {
+        try (final Stream<Path> files = Files.exists(target) ? Files.walk(target) : Stream.empty()) {
             final Iterator<Path> it = files.sorted(Comparator.reverseOrder()).iterator();
             while (it.hasNext()) {
                 Files.delete(it.next());
@@ -155,7 +155,9 @@ public class SimpleMinersRepositorySource implements RepositorySource {
             final Iterator<Path> it = packs.iterator();
             while (it.hasNext()) {
                 final Path next = it.next();
-                Files.copy(next, target.resolve(next.getFileName().toString()));
+                if (!Files.isDirectory(next)) {
+                    Files.copy(next, target.resolve(next.getFileName().toString()));
+                }
             }
         } catch (IOException exception) {
             LOG.error("Encountered exception copying builtIn packs: ", exception);
