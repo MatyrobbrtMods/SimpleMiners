@@ -17,15 +17,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class SimpleMinersRepositorySource implements RepositorySource {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleMinersRepositorySource.class);
 
-    public static final SimpleMinersRepositorySource INSTANCE = new SimpleMinersRepositorySource(SimpleMiners.BASE_PATH.resolve("pack"));
+    public static final SimpleMinersRepositorySource INSTANCE = new SimpleMinersRepositorySource(SimpleMiners.BASE_PATH.resolve("packs"));
 
     private final File directory;
 
@@ -38,9 +41,9 @@ public class SimpleMinersRepositorySource implements RepositorySource {
             LOG.info("Generating new pack folder at {}.", directory);
             try {
                 Files.createDirectories(directory);
-                try (final var pis = SimpleMiners.class.getResourceAsStream("/defaultMiners.zip")) {
+                try (final var pis = SimpleMiners.class.getResourceAsStream("/builtinPacks/defaultMinerPack.zip")) {
                     if (pis != null) {
-                        Files.copy(pis, directory.resolve("defaultMiners.zip"));
+                        Files.copy(pis, directory.resolve("defaultMinerPack.zip"));
                     }
                 }
             } catch (IOException e) {
@@ -71,6 +74,8 @@ public class SimpleMinersRepositorySource implements RepositorySource {
         int failedPacks = 0;
 
         for (File packCandidate : Objects.requireNonNull(directory.listFiles())) {
+            if (packCandidate.getParent().contains("builtin")) continue; // Skip builtin packs
+
             final boolean isArchivePack = isArchivePack(packCandidate, false);
             final boolean isFolderPack = !isArchivePack && isFolderPack(packCandidate, false);
             final String typeName = isArchivePack ? "archive" : isFolderPack ? "folder" : "invalid";
@@ -130,6 +135,31 @@ public class SimpleMinersRepositorySource implements RepositorySource {
     private static boolean endsWithIgnoreCase(String str, String suffix) {
         final int suffixLength = suffix.length();
         return str.regionMatches(true, str.length() - suffixLength, suffix, 0, suffixLength);
+    }
+
+    public void copyDefaults(Path source) {
+        final Path target = directory.toPath().resolve("builtin");
+
+        try (final Stream<Path> files = Files.walk(target)) {
+            final Iterator<Path> it = files.sorted(Comparator.reverseOrder()).iterator();
+            while (it.hasNext()) {
+                Files.delete(it.next());
+            }
+
+            Files.createDirectories(target);
+        } catch (IOException exception) {
+            LOG.error("Encountered exception deleting builtIn miner packs: ", exception);
+        }
+
+        try (final Stream<Path> packs = Files.walk(source, 1)) {
+            final Iterator<Path> it = packs.iterator();
+            while (it.hasNext()) {
+                final Path next = it.next();
+                Files.copy(next, target.resolve(next.getFileName().toString()));
+            }
+        } catch (IOException exception) {
+            LOG.error("Encountered exception copying builtIn packs: ", exception);
+        }
     }
 
     public record PackEntry(File path, boolean isArchive) {}

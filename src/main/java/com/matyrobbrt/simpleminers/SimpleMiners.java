@@ -31,6 +31,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -118,6 +120,10 @@ public class SimpleMiners {
                         .setName(ResultSet.RESULTS_REGISTRY.location())
                         .dataPackRegistry(ResultSet.REQUIRED_MOD_AWARE_CODEC, ResultSet.CODEC))
         ));
+
+        SimpleMinersRepositorySource.INSTANCE.copyDefaults(ModLoadingContext.get().getActiveContainer().getModInfo()
+                .getOwningFile().getFile()
+                .findResource("builtinPacks"));
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             //noinspection InstantiationOfUtilityClass
