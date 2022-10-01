@@ -172,13 +172,13 @@ public class MinerBE extends BlockEntity implements MenuProvider, ContentsListen
 
             for (var result : results) {
                 for (final var up : upgrades.getUpgrades().keySet()) {
-                    result = up.modifyOutput(result);
+                    result = up.modifyOutput(this, result);
                 }
                 Utils.insertItem(
                         itemHandler, result, false, InteractionType.INTERNAL
                 );
             }
-            
+
             progress = 0;
         }
     }

@@ -4,6 +4,7 @@ import com.matyrobbrt.simplegui.util.Color;
 import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.item.MinerUpgrade;
+import com.matyrobbrt.simpleminers.miner.MinerBE;
 import com.matyrobbrt.simpleminers.miner.MinerType;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
@@ -28,7 +29,7 @@ public interface MinerUpgradeType {
     int getMaxAmount();
     Color getColor();
 
-    default ItemStack modifyOutput(ItemStack original) {
+    default ItemStack modifyOutput(MinerBE miner, ItemStack original) {
         return original;
     }
 
