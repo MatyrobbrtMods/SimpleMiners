@@ -1,0 +1,55 @@
+{
+  "copying": {
+    "modifier": {
+      "type": "minecraft:catalyst_weight_bonus",
+      "bonuses": {
+        "additive": false,
+        "bonus": 1,
+        "catalyst": "#simpleminers:catalysts/mekanism"
+      }
+    },
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "mekanism:osmium_ore"
+        },
+        "weight": 6
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "mekanism:tin_ore"
+        },
+        "weight": 5
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "mekanism:fluorite_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "mekanism:lead_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "mekanism:uranium_ore"
+        },
+        "weight": 3
+      }
+    ]
+  },
+  "minerType": "ore",
+  "requiredMod": "mekanism"
+}

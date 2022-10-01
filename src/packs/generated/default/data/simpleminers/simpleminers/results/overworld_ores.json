@@ -1,0 +1,98 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:coal_ore"
+        },
+        "weight": 10
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:copper_ore"
+        },
+        "weight": 8
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:iron_ore"
+        },
+        "weight": 7
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:redstone_ore"
+        },
+        "weight": 7
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:lapis_ore"
+        },
+        "weight": 7
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:diamond_ore"
+        },
+        "modifier": {
+          "type": "minecraft:catalyst_weight_bonus",
+          "bonuses": {
+            "additive": false,
+            "bonus": 2,
+            "catalyst": "#simpleminers:catalysts/gem"
+          }
+        },
+        "weight": 3
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:gold_ore"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "#minecraft:is_badlands",
+            "bonus": 2
+          }
+        },
+        "weight": 5
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:emerald_ore"
+        },
+        "modifier": [
+          {
+            "type": "minecraft:biome_weight_bonus",
+            "bonuses": {
+              "biomes": "#forge:is_mountain",
+              "bonus": 1
+            }
+          },
+          {
+            "type": "minecraft:catalyst_weight_bonus",
+            "bonuses": {
+              "additive": false,
+              "bonus": 2,
+              "catalyst": "#simpleminers:catalysts/gem"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "minerType": "ore"
+}

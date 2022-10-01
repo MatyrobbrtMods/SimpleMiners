@@ -1,0 +1,36 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:item_exists",
+          "item": "simpleminers:gem_catalyst"
+        },
+        {
+          "type": "forge:mod_loaded",
+          "modid": "mekanism"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "B": {
+            "item": "simpleminers:catalyst_base"
+          },
+          "I": {
+            "item": "mekanism:alloy_infused"
+          }
+        },
+        "pattern": [
+          "I",
+          "B",
+          "I"
+        ],
+        "result": {
+          "item": "simpleminers:mekanism_catalyst"
+        }
+      }
+    }
+  ]
+}

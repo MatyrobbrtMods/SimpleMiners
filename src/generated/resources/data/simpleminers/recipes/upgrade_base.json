@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "tag": "forge:dyes/black"
+    },
+    "G": {
+      "tag": "forge:nuggets/gold"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "g": {
+      "tag": "forge:glass"
+    }
+  },
+  "pattern": [
+    " I ",
+    "gDg",
+    " G "
+  ],
+  "result": {
+    "count": 4,
+    "item": "simpleminers:upgrade_base"
+  }
+}

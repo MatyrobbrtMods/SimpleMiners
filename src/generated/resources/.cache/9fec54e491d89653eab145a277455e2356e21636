@@ -1,0 +1,7 @@
+// 1.19.2	2022-10-01T17:28:23.6947726	Item Models: simpleminers
+a50a92c0bbe1dc7f1a372c170512999d35b61ef4 assets/simpleminers/models/item/catalyst_base.json
+ca687759e5db42a54af2713876d1f3801e416482 assets/simpleminers/models/item/energy_upgrade.json
+eff5ad7c7383bc6f43d591f6ae5ee597173acf25 assets/simpleminers/models/item/fortune_upgrade.json
+e7fc8cf2ac642ba2c1df0efd01dd81524d228fee assets/simpleminers/models/item/production_upgrade.json
+72d43626cf7144d0bf3d8ac2df302914dc3995ad assets/simpleminers/models/item/speed_upgrade.json
+e61f5f3124f74d5f77eaf000bce63e5879c723db assets/simpleminers/models/item/upgrade_base.json

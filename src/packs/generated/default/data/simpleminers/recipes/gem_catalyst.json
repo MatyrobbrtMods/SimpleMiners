@@ -1,0 +1,35 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:item_exists",
+          "item": "simpleminers:gem_catalyst"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "B": {
+            "item": "simpleminers:catalyst_base"
+          },
+          "D": {
+            "tag": "forge:gems/diamond"
+          },
+          "E": {
+            "tag": "forge:gems/emerald"
+          }
+        },
+        "pattern": [
+          "D",
+          "B",
+          "E"
+        ],
+        "result": {
+          "item": "simpleminers:gem_catalyst"
+        }
+      }
+    }
+  ]
+}

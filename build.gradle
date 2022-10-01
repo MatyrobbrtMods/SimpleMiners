@@ -1,0 +1,250 @@
+plugins {
+    id 'eclipse'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'io.github.groovymc.modsdotgroovy' version '1.1.2'
+}
+
+modsDotGroovy {
+    dslVersion = '1.1.3'
+    platform 'forge'
+}
+
+group = 'com.matyrobbrt.simpleminers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'simpleminers'
+
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+sourceSets {
+    packs {
+        compileClasspath += main.output
+        resources {
+            srcDir 'src/packs/generated'
+            exclude '**/.cache/**'
+        }
+    }
+}
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+minecraft {
+    mappings channel: 'parchment', version: '2022.09.18-1.19.2'
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
+            jvmArg '-Xmx2G'
+
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'debug'
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', 'simpleminers'
+
+            mods {
+                simpleminers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            property 'forge.enabledGameTestNamespaces', 'simpleminers'
+
+            mods {
+                simpleminers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
+        gameTestServer {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            property 'forge.enabledGameTestNamespaces', 'simpleminers'
+
+            mods {
+                simpleminers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        final dataArgs = ['--mod', 'simpleminers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')]
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            args dataArgs
+
+            mods {
+                simpleminers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        packsGen {
+            parent data
+            jvmArg '-Dsimpleminers.enableDPGeneration=true'
+
+            mods {
+                simpleminers {
+                    source sourceSets.main
+                    source sourceSets.packs
+                }
+            }
+            jvmArg "-Dsimpleminers.baseOut=${file('src/packs/generated/')}"
+
+            afterEvaluate {
+                getArgs().removeIf { it in dataArgs }
+                args '--mod', 'simpleminers', '--all', '--output', file('build/datagenTemp/'),
+                        '--existing', file('src/main/resources/')
+
+                for (final pack : file('src/packs/resources').listFiles()) {
+                    args '--existing', pack
+                }
+            }
+        }
+    }
+}
+tasks.jarJar.enabled = true
+
+findPacks().each { f ->
+    final packTask = tasks.create("create${f.name.capitalize()}Pack", Zip) {
+        group = 'build'
+        dependsOn('processPacksResources')
+        from file("src/packs/resources/${f.name}")
+        from file("src/packs/generated/${f.name}")
+        archiveName = "${f.name}MinerPack.zip"
+        destinationDirectory = project.file('build/libs')
+    }
+    processResources {
+        dependsOn(packTask)
+        from(packTask.archiveFile.get()) {
+            into 'builtinPacks/'
+        }
+    }
+}
+
+List<File> findPacks() {
+    file('src/packs/resources').listFiles().toList()
+}
+
+// Include resources generated by data generators.
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven { url 'https://maven.k-4u.nl' }
+    maven { url 'https://modmaven.dev/' }
+    maven { url 'https://maven.moddinginquisition.org/releases' }
+}
+
+configurations {
+    packsImplementation.extendsFrom(minecraft)
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.19.2-43.1.1'
+
+    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
+    packsImplementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
+
+    implementation fg.deobf("com.matyrobbrt.simplegui:simplegui:$simplegui_version")
+    jarJar "com.matyrobbrt.simplegui:simplegui:[$simplegui_version,)"
+
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
+    // at runtime, use the full JEI jar for Forge
+    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
+
+    // minecraftLibrary('com.ezylang:EvalEx:3.0.0')
+}
+
+// Example for how to get properties into the manifest for reading at runtime.
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "SimpleMiners",
+                "Specification-Vendor"    : "Matyrobbrt",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "Matyrobbrt",
+                'Built-on-Minecraft': project.mc_version
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+reobf {
+    jarJar {}
+}
+java.withSourcesJar()
+
+tasks.named('jarJar').configure {
+    it.finalizedBy('reobfJarJar')
+    it.dependsOn('createDefaultPack')
+    it.from tasks.createDefaultPack.archiveFile.get()
+}
+
+tasks.create('copyDefaultPack', Copy) {
+    group = 'build'
+    from tasks.createDefaultPack.archiveFile.get()
+    into 'run/simpleminers/pack/'
+    dependsOn('createDefaultPack')
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifacts = [jar, sourcesJar]
+            artifactId = 'simpleminers'
+        }
+    }
+    repositories {
+        maven {
+            name = 'ModdingInquisitionMavenRepo'
+            url = 'https://maven.moddinginquisition.org/releases'
+            credentials {
+                username = findProperty('inquisitionMavenUser') ?: ''
+                password = findProperty('inquisitionMavenPassword') ?: ''
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
