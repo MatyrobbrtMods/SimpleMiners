@@ -169,9 +169,16 @@ public class MinerBE extends BlockEntity implements MenuProvider, ContentsListen
 
         if (progress >= getTicksPerMine()) {
             final List<ItemStack> results = pollResult(minerType.rollsPerOperation() + getProductionBonus());
-            results.forEach(result -> Utils.insertItem(
-                    itemHandler, result, false, InteractionType.INTERNAL
-            ));
+
+            for (var result : results) {
+                for (final var up : upgrades.getUpgrades().keySet()) {
+                    result = up.modifyOutput(result);
+                }
+                Utils.insertItem(
+                        itemHandler, result, false, InteractionType.INTERNAL
+                );
+            }
+            
             progress = 0;
         }
     }

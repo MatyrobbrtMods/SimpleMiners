@@ -28,6 +28,10 @@ public interface MinerUpgradeType {
     int getMaxAmount();
     Color getColor();
 
+    default ItemStack modifyOutput(ItemStack original) {
+        return original;
+    }
+
     Component getName();
     Component getDescription();
 
