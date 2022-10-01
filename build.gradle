@@ -146,7 +146,9 @@ findPacks().each { f ->
         group = 'build'
         dependsOn('processPacksResources')
         from file("src/packs/resources/${f.name}")
-        from file("src/packs/generated/${f.name}")
+        from(file("src/packs/generated/${f.name}")) {
+            exclude '.cache/**'
+        }
         archiveName = "${f.name}MinerPack.zip"
         destinationDirectory = project.file('build/libs')
     }
