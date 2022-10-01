@@ -3,7 +3,6 @@ package com.matyrobbrt.simpleminers.packsdatagen.def;
 import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.SimpleShapedRecipeBuilder;
-import mekanism.common.registries.MekanismItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -12,7 +11,6 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.ItemExistsCondition;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
@@ -54,18 +52,5 @@ public class DefaultMinerRecipes extends RecipeProvider {
                         .define('B', Registration.CATALYST_BASE.get())
                         .finish(new ResourceLocation("hi")))
                 .build(pFinishedRecipeConsumer, mod("gem_catalyst"));
-
-        final ResourceLocation mekanismCatalyst = new ResourceLocation(SimpleMiners.MOD_ID, "mekanism_catalyst");
-        ConditionalRecipe.builder()
-                .addCondition(new ItemExistsCondition(gemCatalyst))
-                .addCondition(new ModLoadedCondition("mekanism"))
-                .addRecipe(new SimpleShapedRecipeBuilder(mekanismCatalyst, 1)
-                        .pattern("I")
-                        .pattern("B")
-                        .pattern("I")
-                        .define('I', MekanismItems.INFUSED_ALLOY)
-                        .define('B', Registration.CATALYST_BASE.get())
-                        .finish(new ResourceLocation("hi")))
-                .build(pFinishedRecipeConsumer, mod("mekanism_catalyst"));
     }
 }

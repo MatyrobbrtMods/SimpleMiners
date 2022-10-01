@@ -5,7 +5,7 @@
       "conditions": [
         {
           "type": "forge:item_exists",
-          "item": "simpleminers:gem_catalyst"
+          "item": "simpleminers:mekanism_catalyst"
         },
         {
           "type": "forge:mod_loaded",

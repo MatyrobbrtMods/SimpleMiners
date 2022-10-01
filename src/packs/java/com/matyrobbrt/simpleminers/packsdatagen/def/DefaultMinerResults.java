@@ -10,15 +10,12 @@ import com.matyrobbrt.simpleminers.results.modifier.CatalystWeightBonusModifier;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.predicate.InDimensionPredicate;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
-import mekanism.common.registries.MekanismBlocks;
-import mekanism.common.resource.ore.OreType;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -43,7 +40,7 @@ public class DefaultMinerResults extends MinerResultProvider {
         final Registry<Biome> biomes = ops.registry(Registry.BIOME_REGISTRY).orElseThrow();
 
         final ResultModifier gemsCatalyst = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(
-                Registry.ITEM.getOrCreateTag(DefaultMinerTags.GEM_CATALYSTS),
+                Registry.ITEM.getOrCreateTag(DefaultPackGenerator.GEM_CATALYSTS),
                 2, false
         ));
 
@@ -58,27 +55,6 @@ public class DefaultMinerResults extends MinerResultProvider {
                         .add(5, biomeBonus(2, biomes.getOrCreateTag(BiomeTags.IS_BADLANDS)), Items.GOLD_ORE)
                         .add(1, biomeBonus(1, biomes.getOrCreateTag(Tags.Biomes.IS_MOUNTAIN)).and(gemsCatalyst), Items.EMERALD_ORE))
                 .save(consumer, mod("overworld_ores"));
-
-        // region Mekanism
-
-        final ResultModifier mekCatalyst = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(
-                Registry.ITEM.getOrCreateTag(DefaultMinerTags.MEK_CATALYSTS),
-                1, false
-        ));
-
-        ResultRecipeBuilder.builder("ore", "mekanism")
-                .addCopying(mekCatalyst, overworld, builder -> builder
-                        .add(6, item(OreType.OSMIUM))
-                        .add(5, item(OreType.TIN))
-                        .add(4, item(OreType.FLUORITE), item(OreType.LEAD))
-                        .add(3, item(OreType.URANIUM)))
-                .save(consumer, mod("compat/mekanism_ore"));
-
-        // endregion
-    }
-
-    private static Item item(OreType oreType) {
-        return MekanismBlocks.ORES.get(oreType).stone().asItem();
     }
 
     private static ResultModifier biomeBonus(int amount, HolderSet<Biome> biomes) {

@@ -2,9 +2,5 @@
   "gem_catalyst": {
     "rarity": "epic",
     "translation": "Gem Catalyst"
-  },
-  "mekanism_catalyst": {
-    "rarity": "rare",
-    "translation": "Mekanism Catalyst"
   }
 }

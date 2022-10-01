@@ -37,9 +37,6 @@ public record DefaultMinersProvider(DataGenerator generator) implements DataProv
                 .add("gem_catalyst", builder -> builder
                         .rarity(Rarity.EPIC)
                         .translation("Gem Catalyst"))
-                .add("mekanism_catalyst", builder -> builder
-                        .rarity(Rarity.RARE)
-                        .translation("Mekanism Catalyst"))
                 .save(generator, pOutput);
     }
 
