@@ -1,5 +1,10 @@
 package com.matyrobbrt.simpleminers.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import net.minecraft.server.packs.FilePackResources;
 import net.minecraft.server.packs.FolderPackResources;
@@ -7,6 +12,7 @@ import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.repository.RepositorySource;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,40 +22,62 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class SimpleMinersRepositorySource implements RepositorySource {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOG = LoggerFactory.getLogger(SimpleMinersRepositorySource.class);
 
     public static final SimpleMinersRepositorySource INSTANCE = new SimpleMinersRepositorySource(SimpleMiners.BASE_PATH.resolve("packs"));
 
     private final File directory;
+    private final File builtInDir;
+    private final Predicate<String> builtinTester;
 
     private SimpleMinersRepositorySource(Path directory) {
         directory = directory.toAbsolutePath();
         this.directory = directory.toFile();
-
+        this.builtInDir = new File(this.directory, "builtins");
 
         if (Files.notExists(directory)) {
             LOG.info("Generating new pack folder at {}.", directory);
             try {
                 Files.createDirectories(directory);
-                try (final var pis = SimpleMiners.class.getResourceAsStream("/builtinPacks/defaultMinerPack.zip")) {
-                    if (pis != null) {
-                        Files.copy(pis, directory.resolve("defaultMinerPack.zip"));
-                    }
-                }
             } catch (IOException e) {
                 LOG.error("Encountered exception creating resource pack folder: ", e);
                 throw new RuntimeException(e);
             }
+        }
+
+        final Path configPath = directory.resolve("builtins.json");
+        try {
+            if (Files.exists(configPath)) {
+                try (final var reader = Files.newBufferedReader(configPath)) {
+                    final var json = GSON.fromJson(reader, JsonObject.class);
+                    final boolean isBlacklist = json.get("mode").getAsString().equalsIgnoreCase("blacklist");
+                    final List<String> packs = StreamSupport.stream(
+                            json.getAsJsonArray("packs").spliterator(), false
+                    ).map(JsonElement::getAsString).toList();
+                    this.builtinTester = name -> isBlacklist != packs.contains(name);
+                }
+            } else {
+                final var json = new JsonObject();
+                json.addProperty("mode", "blacklist");
+                json.add("packs", new JsonArray());
+                Files.writeString(configPath, GSON.toJson(json));
+                this.builtinTester = e -> true;
+            }
+        } catch (IOException exception) {
+            LOG.error("Encountered exception setting up builtin pack config: ", exception);
+            throw new RuntimeException(exception);
         }
     }
 
@@ -63,6 +91,10 @@ public class SimpleMinersRepositorySource implements RepositorySource {
                 packs.add(new PackEntry(packCandidate, isArchivePack));
             }
         }
+        packs.addAll(Stream.of(Objects.requireNonNull(builtInDir.listFiles()))
+                .filter(it -> builtinTester.test(FilenameUtils.removeExtension(it.getName())))
+                .map(it -> new PackEntry(it, isArchivePack(it, false)))
+                .toList());
         return packs;
     }
 
@@ -73,10 +105,19 @@ public class SimpleMinersRepositorySource implements RepositorySource {
         int newPackCount = 0;
         int failedPacks = 0;
 
-        for (File packCandidate : Objects.requireNonNull(directory.listFiles())) {
-            if (packCandidate.getParent().contains("builtin")) continue; // Skip builtin packs
+        final List<File> candidates = new ArrayList<>();
+        candidates.addAll(List.of(Objects.requireNonNull(directory.listFiles())));
+        candidates.addAll(Stream.of(Objects.requireNonNull(builtInDir.listFiles()))
+                .filter(it -> builtinTester.test(FilenameUtils.removeExtension(it.getName())))
+                .toList());
 
+        candidates.remove(directory);
+        candidates.remove(builtInDir);
+
+        for (File packCandidate : candidates) {
             final boolean isArchivePack = isArchivePack(packCandidate, false);
+            if (packCandidate.isFile() && !isArchivePack) continue;
+
             final boolean isFolderPack = !isArchivePack && isFolderPack(packCandidate, false);
             final String typeName = isArchivePack ? "archive" : isFolderPack ? "folder" : "invalid";
 
@@ -138,9 +179,10 @@ public class SimpleMinersRepositorySource implements RepositorySource {
     }
 
     public void copyDefaults(Path source) {
-        final Path target = directory.toPath().resolve("builtin");
+        final Path target = builtInDir.toPath();
 
-        try (final Stream<Path> files = Files.exists(target) ? Files.walk(target) : Stream.empty()) {
+        try (final Stream<Path> files = (Files.exists(target) ? Files.walk(target) : Stream.<Path>empty())
+                .filter(it -> it.getFileName().toString().endsWith(".zip"))) {
             final Iterator<Path> it = files.sorted(Comparator.reverseOrder()).iterator();
             while (it.hasNext()) {
                 Files.delete(it.next());
