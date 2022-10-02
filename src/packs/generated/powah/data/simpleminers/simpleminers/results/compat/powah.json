@@ -1,0 +1,33 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "powah:uraninite_ore_poor"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "powah:uraninite_ore"
+        },
+        "weight": 3
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "powah:uraninite_ore_dense"
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "ore",
+  "requiredMod": "powah"
+}

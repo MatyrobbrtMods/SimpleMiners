@@ -4,6 +4,7 @@ import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
 import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
 import com.matyrobbrt.simpleminers.data.base.result.ResultRecipeBuilder;
+import com.matyrobbrt.simpleminers.packsdatagen.DatagenCheating;
 import com.matyrobbrt.simpleminers.packsdatagen.PackGenerator;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
 import com.matyrobbrt.simpleminers.results.modifier.BiomeWeightBonusModifier;
@@ -17,8 +18,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.holdersets.AndHolderSet;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -52,8 +51,6 @@ public class ThermalGenerator implements PackGenerator {
     }
 
     private static Item ore(String name) {
-        ((ForgeRegistry<Item>) ForgeRegistries.ITEMS).unfreeze();
-        ForgeRegistries.ITEMS.register(new ResourceLocation("thermal", name + "_ore"), new Item(new Item.Properties()));
-        return ForgeRegistries.ITEMS.getValue(new ResourceLocation("thermal", name + "_ore"));
+        return DatagenCheating.item("thermal", name + "_ore");
     }
 }
