@@ -1,0 +1,71 @@
+{
+  "copying": [
+    {
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:the_nether"
+      },
+      "results": [
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:emeraldite_ore"
+          },
+          "weight": 6
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:anthracite_ore"
+          },
+          "weight": 6
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:emeraldite_ore"
+          },
+          "weight": 3
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:pendorite_ore"
+          },
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:the_end"
+      },
+      "results": [
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:ametrine_ore"
+          },
+          "weight": 5
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:ametrine_ore"
+          },
+          "weight": 5
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:cryptic_redstone_ore"
+          },
+          "weight": 7
+        }
+      ]
+    }
+  ],
+  "minerType": "ore",
+  "requiredMod": "byg"
+}

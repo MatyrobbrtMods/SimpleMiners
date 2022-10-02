@@ -6,6 +6,7 @@ import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,26 +43,26 @@ public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
         return add(new ItemResult(stack, weight, predicate));
     }
 
-    default T add(int weight, Item item) {
-        return add(weight, item.getDefaultInstance(), ResultModifiers.NOP);
+    default T add(int weight, ItemLike item) {
+        return add(weight, item.asItem().getDefaultInstance(), ResultModifiers.NOP);
     }
 
-    default T add(int weight, Item... items) {
-        for (Item item : items) {
+    default T add(int weight, ItemLike... items) {
+        for (ItemLike item : items) {
             add(weight, item);
         }
         return (T) this;
     }
 
-    default T add(int weight, ResultModifier modifier, Item... items) {
-        for (Item item : items) {
-            add(weight, item.getDefaultInstance(), modifier);
+    default T add(int weight, ResultModifier modifier, ItemLike... items) {
+        for (ItemLike item : items) {
+            add(weight, item.asItem().getDefaultInstance(), modifier);
         }
         return (T) this;
     }
-    default T add(int weight, ResultPredicate predicate, Item... items) {
-        for (Item item : items) {
-            add(weight, item.getDefaultInstance(), predicate);
+    default T add(int weight, ResultPredicate predicate, ItemLike... items) {
+        for (ItemLike item : items) {
+            add(weight, item.asItem().getDefaultInstance(), predicate);
         }
         return (T) this;
     }

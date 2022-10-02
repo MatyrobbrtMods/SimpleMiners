@@ -35,7 +35,12 @@ final compatMods = [
         'create-328085:4011414',
 
         'extreme_reactors-250277:3927548',
-        'zero_core-247921:3927546'
+        'zero_core-247921:3927546',
+
+        'terrablender-563928:3966342',
+        'byg-247560:3970266',
+
+        'immersiveengineering-231951:3963698'
 ]
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
@@ -195,7 +200,7 @@ configurations {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.1.1'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.1.32'
 
     runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
     packsImplementation fg.deobf("mekanism:Mekanism:${mekanism_version}")

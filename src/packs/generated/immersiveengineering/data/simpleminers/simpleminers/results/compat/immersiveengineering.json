@@ -1,0 +1,41 @@
+{
+  "minerType": "ore",
+  "requiredMod": "immersiveengineering",
+  "results": [
+    {
+      "item": {
+        "Count": 1,
+        "id": "immersiveengineering:ore_uranium"
+      },
+      "weight": 3
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "immersiveengineering:ore_lead"
+      },
+      "weight": 4
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "immersiveengineering:ore_aluminum"
+      },
+      "weight": 4
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "immersiveengineering:ore_nickel"
+      },
+      "weight": 4
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "immersiveengineering:ore_silver"
+      },
+      "weight": 4
+    }
+  ]
+}
