@@ -67,7 +67,7 @@ public class EnergyTab extends TexturedElement {
         final int perTick = usagePerTick.getAsInt();
 
         final List<Component> components = Lists.newArrayList(
-                Translations.GUI_ENERGY.get(Component.literal(Utils.getCompressedCount(current)).withStyle(ChatFormatting.GOLD), max),
+                Translations.GUI_ENERGY.get(Component.literal(Utils.getCompressedCount(current)).withStyle(ChatFormatting.GOLD), Utils.getCompressedCount(max)),
                 Translations.GUI_TRANSFER_RATE.get(Component.literal(Utils.getCompressedCount(io)).withStyle(ChatFormatting.AQUA)),
                 Translations.GUI_USAGE_PER_TICK.get(Component.literal(Utils.getCompressedCount(perTick)).withStyle(ChatFormatting.GREEN))
         );
