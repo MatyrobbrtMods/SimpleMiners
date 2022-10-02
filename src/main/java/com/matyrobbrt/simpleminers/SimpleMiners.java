@@ -1,6 +1,7 @@
 package com.matyrobbrt.simpleminers;
 
 import com.matyrobbrt.simpleminers.client.SimpleMinersClient;
+import com.matyrobbrt.simpleminers.commands.BuiltInPacksCommands;
 import com.matyrobbrt.simpleminers.item.MinerCatalyst;
 import com.matyrobbrt.simpleminers.miner.MinerBE;
 import com.matyrobbrt.simpleminers.miner.MinerBlock;
@@ -12,8 +13,10 @@ import com.matyrobbrt.simpleminers.results.ResultSet;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicates;
 import com.matyrobbrt.simpleminers.util.JsonLoader;
-import com.matyrobbrt.simpleminers.util.SimpleMinersRepositorySource;
+import com.matyrobbrt.simpleminers.util.pack.BuiltInPacksRepository;
+import com.matyrobbrt.simpleminers.util.pack.SimpleMinersRepositorySource;
 import com.mojang.serialization.Lifecycle;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
@@ -30,8 +33,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -65,6 +68,12 @@ public class SimpleMiners {
     public static Map<Item, JsonLoader.CatalystData> catalysts;
 
     public SimpleMiners() {
+        final var container = ModLoadingContext.get().getActiveContainer();
+        BuiltInPacksRepository.instance = new BuiltInPacksRepository(
+                container.getModInfo().getOwningFile()
+                        .getFile().findResource("builtinPacks")
+        );
+
         final var bus = FMLJavaModLoadingContext.get().getModEventBus();
         Registration.ITEMS.register(bus);
         Registration.BLOCKS.register(bus);
@@ -110,6 +119,7 @@ public class SimpleMiners {
 
         bus.addListener((final AddPackFindersEvent event) -> {
             if (event.getPackType() == PackType.SERVER_DATA) {
+                event.addRepositorySource(BuiltInPacksRepository.instance);
                 event.addRepositorySource(SimpleMinersRepositorySource.INSTANCE);
             }
         });
@@ -121,9 +131,11 @@ public class SimpleMiners {
                         .dataPackRegistry(ResultSet.REQUIRED_MOD_AWARE_CODEC, ResultSet.CODEC))
         ));
 
-        SimpleMinersRepositorySource.INSTANCE.copyDefaults(ModLoadingContext.get().getActiveContainer().getModInfo()
-                .getOwningFile().getFile()
-                .findResource("builtinPacks"));
+        MinecraftForge.EVENT_BUS.addListener((final RegisterCommandsEvent event) -> {
+            final var node = Commands.literal(MOD_ID);
+            BuiltInPacksCommands.register(node);
+            event.getDispatcher().register(node);
+        });
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             //noinspection InstantiationOfUtilityClass

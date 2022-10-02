@@ -4,7 +4,8 @@ import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.menu.MinerMenu;
 import com.matyrobbrt.simpleminers.miner.MinerType;
-import com.matyrobbrt.simpleminers.util.SimpleMinersRepositorySource;
+import com.matyrobbrt.simpleminers.util.pack.BuiltInPacksRepository;
+import com.matyrobbrt.simpleminers.util.pack.SimpleMinersRepositorySource;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -32,7 +33,9 @@ public class SimpleMinersClient {
         modBus.addListener((final AddPackFindersEvent event) -> {
             if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
 
+            event.addRepositorySource(BuiltInPacksRepository.instance);
             event.addRepositorySource(SimpleMinersRepositorySource.INSTANCE);
+
             event.addRepositorySource((pInfoConsumer, pInfoFactory) -> pInfoConsumer.accept(Pack.create(
                     "simpleminers_dynamic_assets",
                     true, () -> DynamicAssetsRP.INSTANCE,

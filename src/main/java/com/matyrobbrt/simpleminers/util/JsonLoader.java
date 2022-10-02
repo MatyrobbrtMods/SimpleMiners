@@ -7,6 +7,8 @@ import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.miner.MinerType;
 import com.matyrobbrt.simpleminers.miner.upgrade.MinerUpgradeType;
 import com.matyrobbrt.simpleminers.miner.upgrade.UpgradeConfiguration;
+import com.matyrobbrt.simpleminers.util.pack.BuiltInPacksRepository;
+import com.matyrobbrt.simpleminers.util.pack.SimpleMinersRepositorySource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
@@ -17,9 +19,7 @@ import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -128,18 +128,21 @@ public class JsonLoader {
     public static List<MinerType> loadMinersFromDir() throws IOException, URISyntaxException {
         final Path path = SimpleMiners.BASE_PATH.resolve("miners");
         if (!Files.exists(path)) {
-            // TODO default miner types?
             Files.createDirectories(path);
         }
         final List<MinerType> types = new ArrayList<>();
         loadMinersFromDir(types, path);
 
-        for (SimpleMinersRepositorySource.PackEntry packEntry : SimpleMinersRepositorySource.INSTANCE.findCandidates()) {
-            final var archive = packEntry.path();
-            try (final var zipFs = !packEntry.isArchive() ? archive.toPath().getFileSystem() : FileSystems.newFileSystem(new URI("jar:file", archive.toURI().getPath(), null), new HashMap<>())) {
-                final var inZip = zipFs.getPath("miners");
-                if (Files.exists(inZip)) loadMinersFromDir(types, inZip);
+        final List<SimpleMinersRepositorySource.PackEntry> entries = new ArrayList<>();
+        entries.addAll(SimpleMinersRepositorySource.INSTANCE.findCandidates());
+        entries.addAll(BuiltInPacksRepository.instance.findPacks());
+
+        for (SimpleMinersRepositorySource.PackEntry packEntry : entries) {
+            final var inZip = packEntry.pathGetter().get("miners");
+            if (Files.exists(inZip)) {
+                loadMinersFromDir(types, inZip);
             }
+            packEntry.pathGetter().close();
         }
 
         return types;
@@ -162,19 +165,22 @@ public class JsonLoader {
 
     public static Map<String, CatalystData> loadCatalysts() throws IOException, URISyntaxException {
         final Path path = SimpleMiners.BASE_PATH.resolve("catalysts.json");
-        if (!Files.exists(path)) {
-            // TODO default catalysts?
-            return Map.of();
-        }
         final Map<String, CatalystData> catalysts = new HashMap<>();
-        loadCatalystsFromFile(catalysts, path);
 
-        for (SimpleMinersRepositorySource.PackEntry packEntry : SimpleMinersRepositorySource.INSTANCE.findCandidates()) {
-            final var archive = packEntry.path();
-            try (final var zipFs = !packEntry.isArchive() ? archive.toPath().getFileSystem() : FileSystems.newFileSystem(new URI("jar:file", archive.toURI().getPath(), null), new HashMap<>())) {
-                final var inZip = zipFs.getPath("catalysts.json");
-                if (Files.exists(inZip)) loadCatalystsFromFile(catalysts, inZip);
+        if (Files.exists(path)) {
+            loadCatalystsFromFile(catalysts, path);
+        }
+
+        final List<SimpleMinersRepositorySource.PackEntry> entries = new ArrayList<>();
+        entries.addAll(SimpleMinersRepositorySource.INSTANCE.findCandidates());
+        entries.addAll(BuiltInPacksRepository.instance.findPacks());
+
+        for (SimpleMinersRepositorySource.PackEntry packEntry : entries) {
+            final var inZip = packEntry.pathGetter().get("catalysts.json");
+            if (Files.exists(inZip)) {
+                loadCatalystsFromFile(catalysts, inZip);
             }
+            packEntry.pathGetter().close();
         }
 
         return catalysts;
