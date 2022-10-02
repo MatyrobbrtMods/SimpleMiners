@@ -1,1 +1,1 @@
-create,bigreactors,byg,immersiveengineering
+create,bigreactors,byg,immersiveengineering,thermal

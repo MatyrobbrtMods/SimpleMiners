@@ -1,0 +1,82 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:the_end"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:tin_ore"
+        },
+        "weight": 5
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:sulfur_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:niter_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:lead_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:silver_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:nickel_ore"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:cinnabar_ore"
+        },
+        "weight": 3
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "thermal:apatite_ore"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": {
+              "type": "forge:and",
+              "values": [
+                "#minecraft:is_river",
+                "#minecraft:is_ocean",
+                "#minecraft:is_beach"
+              ]
+            },
+            "bonus": 3
+          }
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "ore",
+  "requiredMod": "thermal"
+}
