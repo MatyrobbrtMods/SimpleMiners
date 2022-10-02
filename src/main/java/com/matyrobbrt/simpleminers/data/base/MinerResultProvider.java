@@ -1,9 +1,12 @@
 package com.matyrobbrt.simpleminers.data.base;
 
 import com.google.gson.JsonElement;
+import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
 import com.matyrobbrt.simpleminers.results.ResultSet;
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.JsonOps;
 import cpw.mods.modlauncher.api.LamdbaExceptionUtils;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -27,6 +30,9 @@ public abstract class MinerResultProvider implements DataProvider {
     public MinerResultProvider(DataGenerator dataGenerator, RegistryOps<JsonElement> ops) {
         this.dataGenerator = dataGenerator;
         this.ops = ops;
+    }
+    public MinerResultProvider(DataGenerator generator) {
+        this(generator, RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy()));
     }
 
     @Override

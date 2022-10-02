@@ -1,6 +1,5 @@
-package com.matyrobbrt.simpleminers.data.base;
+package com.matyrobbrt.simpleminers.data.base.result;
 
-import com.matyrobbrt.simpleminers.results.IItemResult;
 import com.matyrobbrt.simpleminers.results.ItemResult;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
@@ -8,10 +7,8 @@ import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
@@ -41,6 +38,9 @@ public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
     default T add(int weight, ItemStack stack, ResultModifier modifier) {
         return add(new ItemResult(stack, weight, modifier));
     }
+    default T add(int weight, ItemStack stack, ResultPredicate predicate) {
+        return add(new ItemResult(stack, weight, predicate));
+    }
 
     default T add(int weight, Item item) {
         return add(weight, item.getDefaultInstance(), ResultModifiers.NOP);
@@ -56,6 +56,12 @@ public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
     default T add(int weight, ResultModifier modifier, Item... items) {
         for (Item item : items) {
             add(weight, item.getDefaultInstance(), modifier);
+        }
+        return (T) this;
+    }
+    default T add(int weight, ResultPredicate predicate, Item... items) {
+        for (Item item : items) {
+            add(weight, item.getDefaultInstance(), predicate);
         }
         return (T) this;
     }

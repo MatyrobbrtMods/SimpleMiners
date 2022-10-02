@@ -1,4 +1,4 @@
-package com.matyrobbrt.simpleminers.data.base;
+package com.matyrobbrt.simpleminers.data.base.result;
 
 import com.matyrobbrt.simpleminers.results.ResultSet;
 import net.minecraft.resources.ResourceLocation;

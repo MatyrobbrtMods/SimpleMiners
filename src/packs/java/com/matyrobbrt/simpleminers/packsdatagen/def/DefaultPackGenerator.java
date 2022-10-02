@@ -1,13 +1,13 @@
 package com.matyrobbrt.simpleminers.packsdatagen.def;
 
 import com.matyrobbrt.simpleminers.SimpleMiners;
+import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
 import com.matyrobbrt.simpleminers.packsdatagen.PackGenerator;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -37,12 +37,8 @@ public class DefaultPackGenerator implements PackGenerator {
         gen.addProvider(sides.includeServer(), new DefaultMinerResults(gen, RegistryOps.create(
                 JsonOps.INSTANCE, RegistryAccess.builtinCopy()
         )));
-        gen.addProvider(sides.includeServer(), new TagsProvider<>(gen, Registry.ITEM, SimpleMiners.MOD_ID, helper) {
-            @Override
-            protected void addTags() {
-                tag(DefaultPackGenerator.GEM_CATALYSTS).addOptional(mod("gem_catalyst"));
-            }
-        });
+        gen.addProvider(sides.includeServer(), TagProviderBuilder.builder(gen, Registry.ITEM_REGISTRY, helper)
+                .tag(DefaultPackGenerator.GEM_CATALYSTS, it -> it.addOptional(mod("gem_catalyst"))));
     }
 
 }

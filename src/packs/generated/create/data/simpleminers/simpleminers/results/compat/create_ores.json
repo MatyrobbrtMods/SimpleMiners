@@ -1,0 +1,15 @@
+{
+  "minerType": "ore",
+  "requiredMod": "create",
+  "results": {
+    "item": {
+      "Count": 1,
+      "id": "create:zinc_ore"
+    },
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "weight": 6
+  }
+}

@@ -4,9 +4,10 @@ import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.CatalystBuilder;
 import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
-import com.matyrobbrt.simpleminers.data.base.ResultConsumer;
-import com.matyrobbrt.simpleminers.data.base.ResultRecipeBuilder;
 import com.matyrobbrt.simpleminers.data.base.SimpleShapedRecipeBuilder;
+import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
+import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
+import com.matyrobbrt.simpleminers.data.base.result.ResultRecipeBuilder;
 import com.matyrobbrt.simpleminers.packsdatagen.PackGenerator;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
 import com.matyrobbrt.simpleminers.results.modifier.CatalystWeightBonusModifier;
@@ -25,7 +26,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -60,12 +60,8 @@ public class MekanismGenerator implements PackGenerator {
             }
         });
 
-        generator.addProvider(sides.includeServer(), new TagsProvider<>(generator, Registry.ITEM, SimpleMiners.MOD_ID, existingFileHelper) {
-            @Override
-            protected void addTags() {
-                tag(MEK_CATALYSTS).addOptional(mod("mekanism_catalyst"));
-            }
-        });
+        generator.addProvider(sides.includeServer(), TagProviderBuilder.builder(generator, Registry.ITEM_REGISTRY, existingFileHelper)
+                .tag(MEK_CATALYSTS, it -> it.addOptional(mod("mekanism_catalyst"))));
         generator.addProvider(sides.includeServer(), new RecipeProvider(generator) {
             @Override
             protected void buildCraftingRecipes(Consumer<FinishedRecipe> pFinishedRecipeConsumer) {

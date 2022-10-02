@@ -1,13 +1,11 @@
-package com.matyrobbrt.simpleminers.data.base;
+package com.matyrobbrt.simpleminers.data.base.result;
 
-import com.google.gson.JsonElement;
 import com.matyrobbrt.simpleminers.results.IItemResult;
 import com.matyrobbrt.simpleminers.results.ItemResult;
 import com.matyrobbrt.simpleminers.results.ResultSet;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,0 +1,39 @@
+{
+  "minerType": "ore",
+  "requiredMod": "bigreactors",
+  "results": [
+    {
+      "item": {
+        "Count": 1,
+        "id": "bigreactors:anglesite_ore"
+      },
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:the_end"
+      },
+      "weight": 3
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "bigreactors:benitoite_ore"
+      },
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:the_nether"
+      },
+      "weight": 3
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "bigreactors:yellorite_ore"
+      },
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:overworld"
+      },
+      "weight": 3
+    }
+  ]
+}
