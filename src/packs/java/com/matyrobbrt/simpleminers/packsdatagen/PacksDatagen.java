@@ -2,6 +2,7 @@ package com.matyrobbrt.simpleminers.packsdatagen;
 
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.PackMCMetaProvider;
+import com.mojang.logging.LogUtils;
 import net.minecraft.DetectedVersion;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -9,6 +10,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -20,8 +22,11 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = SimpleMiners.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PacksDatagen {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     @SubscribeEvent
     static void gatherData(final GatherDataEvent event) throws IOException {
+        record GenData(DataGenerator generator, String packName) {}
         final var sides = new PackGenerator.SideProvider() {
             @Override
             public boolean includeClient() {
@@ -34,7 +39,7 @@ public class PacksDatagen {
             }
         };
 
-        final List<DataGenerator> generators = new ArrayList<>();
+        final List<GenData> generators = new ArrayList<>();
         final ExistingFileHelper helper = event.getExistingFileHelper();
 
         final Path baseOut = Path.of(System.getProperty("simpleminers.baseOut"));
@@ -52,11 +57,12 @@ public class PacksDatagen {
 
             generator.addProvider(true, new PackMCMetaProvider(generator, "SimpleMiners %s pack".formatted(name)));
 
-            generators.add(generator);
+            generators.add(new GenData(generator, name));
         });
 
         for (final var gen : generators) {
-            gen.run();
+            LOGGER.info("Started generator for pack {}", gen.packName());
+            gen.generator().run();
         }
     }
 

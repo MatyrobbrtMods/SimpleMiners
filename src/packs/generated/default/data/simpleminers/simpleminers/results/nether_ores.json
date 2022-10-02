@@ -10,14 +10,14 @@
           "Count": 1,
           "id": "minecraft:nether_quartz_ore"
         },
-        "weight": 6
+        "weight": 15
       },
       {
         "item": {
           "Count": 1,
           "id": "minecraft:nether_gold_ore"
         },
-        "weight": 4
+        "weight": 8
       },
       {
         "item": {

@@ -32,8 +32,8 @@ public class DefaultMinerResults extends MinerResultProvider {
     protected void gather(@NotNull ResultConsumer consumer) {
         ResultRecipeBuilder.builder("ore")
                 .addCopying(null, new InDimensionPredicate(Level.NETHER), builder -> builder
-                        .add(6, Items.NETHER_QUARTZ_ORE)
-                        .add(4, Items.NETHER_GOLD_ORE)
+                        .add(15, Items.NETHER_QUARTZ_ORE)
+                        .add(8, Items.NETHER_GOLD_ORE)
                         .add(1, Items.ANCIENT_DEBRIS))
                 .save(consumer, mod("nether_ores"));
 
