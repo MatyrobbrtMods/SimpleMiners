@@ -35,6 +35,7 @@ public class DatagenCheating {
             if (!registered.contains(location)) {
                 registry.unfreeze();
                 registry.register(location, factory.get());
+                registered.add(location);
             }
             return registry.getValue(location);
         }
