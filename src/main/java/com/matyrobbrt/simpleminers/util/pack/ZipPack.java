@@ -8,13 +8,15 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 public class ZipPack extends PathPackResources {
-    private static final ThreadLocal<FileSystem> SYSTEM = new ThreadLocal<>();
-
     private final FileSystem fs;
 
     public ZipPack(Path zip) throws IOException {
-        super(zip.toString(), getRoot(zip));
-        this.fs = SYSTEM.get();
+        this(FileSystems.newFileSystem(zip), zip);
+    }
+
+    private ZipPack(FileSystem fs, Path zip) {
+        super(zip.toString(), fs.getPath("/"));
+        this.fs = fs;
     }
 
     @Override
@@ -25,11 +27,5 @@ public class ZipPack extends PathPackResources {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static Path getRoot(Path zip) throws IOException {
-        final var fs = FileSystems.newFileSystem(zip);
-        SYSTEM.set(fs);
-        return fs.getPath("/");
     }
 }
