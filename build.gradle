@@ -167,7 +167,7 @@ findPacks().each { f ->
             exclude '.cache/**'
         }
         archiveName = "${f}MinerPack.zip"
-        destinationDirectory = project.file('build/libs')
+        destinationDirectory = project.file('build/libs/packs')
     }
     processResources {
         dependsOn(packTask)
