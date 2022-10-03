@@ -1,0 +1,45 @@
+{
+  "copying": {
+    "modifier": {
+      "type": "minecraft:biome_weight_bonus",
+      "bonuses": {
+        "biomes": {
+          "type": "forge:or",
+          "values": [
+            "minecraft:savanna",
+            "minecraft:savanna_plateau"
+          ]
+        },
+        "bonus": 4
+      }
+    },
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:acacia_log"
+        },
+        "weight": 8
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:acacia_leaves"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:acacia_sapling"
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "wood"
+}

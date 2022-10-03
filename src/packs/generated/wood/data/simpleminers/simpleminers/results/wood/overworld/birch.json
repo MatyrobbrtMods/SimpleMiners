@@ -1,0 +1,39 @@
+{
+  "copying": {
+    "modifier": {
+      "type": "minecraft:biome_weight_bonus",
+      "bonuses": {
+        "biomes": "minecraft:dark_forest",
+        "bonus": 4
+      }
+    },
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:birch_log"
+        },
+        "weight": 8
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:birch_leaves"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:birch_sapling"
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "wood"
+}

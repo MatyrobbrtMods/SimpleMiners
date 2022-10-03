@@ -1,0 +1,39 @@
+{
+  "copying": {
+    "modifier": {
+      "type": "minecraft:biome_weight_bonus",
+      "bonuses": {
+        "biomes": "#minecraft:is_taiga",
+        "bonus": 4
+      }
+    },
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:spruce_log"
+        },
+        "weight": 8
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:spruce_leaves"
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:spruce_sapling"
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "wood"
+}

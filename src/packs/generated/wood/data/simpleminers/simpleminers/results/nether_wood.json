@@ -1,0 +1,121 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:the_nether"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:warped_stem"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:warped_forest",
+            "bonus": 4
+          }
+        },
+        "weight": 8
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:warped_wart_block"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:warped_forest",
+            "bonus": 4
+          }
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:warped_fungus"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:warped_forest",
+            "bonus": 4
+          }
+        },
+        "weight": 2
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:shroomlight"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:warped_forest",
+            "bonus": 4
+          }
+        }
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:crimson_stem"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:crimson_forest",
+            "bonus": 4
+          }
+        },
+        "weight": 8
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:crimson_nylium"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:crimson_forest",
+            "bonus": 4
+          }
+        },
+        "weight": 4
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:crimson_fungus"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:crimson_forest",
+            "bonus": 4
+          }
+        },
+        "weight": 2
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:shroomlight"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:crimson_forest",
+            "bonus": 4
+          }
+        }
+      }
+    ]
+  },
+  "minerType": "wood"
+}

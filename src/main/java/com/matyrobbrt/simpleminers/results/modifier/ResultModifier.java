@@ -7,10 +7,12 @@ import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicates;
 import com.matyrobbrt.simpleminers.util.Utils;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
 import oshi.annotation.concurrent.Immutable;
 
 import java.util.List;
@@ -40,6 +42,9 @@ public interface ResultModifier {
 
     static BiomeWeightBonusModifier biomeWeightBonus(BiomeWeightBonusModifier.BonusEntry... entries) {
         return new BiomeWeightBonusModifier(List.of(entries));
+    }
+    static BiomeWeightBonusModifier biomeWeightBonus(HolderSet<Biome> biomes, int bonus) {
+        return biomeWeightBonus(new BiomeWeightBonusModifier.BonusEntry(biomes, bonus));
     }
 
     static CatalystWeightBonusModifier catalystWeightBonus(CatalystWeightBonusModifier.Entry... entries) {

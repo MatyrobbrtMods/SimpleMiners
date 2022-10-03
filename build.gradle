@@ -243,15 +243,6 @@ java.withSourcesJar()
 
 tasks.named('jarJar').configure {
     it.finalizedBy('reobfJarJar')
-    it.dependsOn('createDefaultPack')
-    it.from tasks.createDefaultPack.archiveFile.get()
-}
-
-tasks.create('copyDefaultPack', Copy) {
-    group = 'build'
-    from tasks.createDefaultPack.archiveFile.get()
-    into 'run/simpleminers/pack/'
-    dependsOn('createDefaultPack')
 }
 
 publishing {

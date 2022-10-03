@@ -1,0 +1,22 @@
+{
+  "energy": {
+    "capacity": 8000,
+    "ioRate": 800,
+    "usagePerTick": 80
+  },
+  "modelData": {
+    "overlay": "minecraft:textures/block/oak_log.png"
+  },
+  "rollsPerOperation": 1,
+  "ticksPerOperation": 400,
+  "translation": "Wood Miner",
+  "upgrades": {
+    "minecraft:energy": {
+      "usageDecrease": 20
+    },
+    "minecraft:speed": {
+      "energyUsage": 60,
+      "timeDecrease": 20
+    }
+  }
+}

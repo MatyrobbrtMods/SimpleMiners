@@ -1,0 +1,20 @@
+{
+  "minerType": "wood",
+  "results": {
+    "item": {
+      "Count": 1,
+      "id": "minecraft:apple"
+    },
+    "modifier": {
+      "type": "minecraft:biome_weight_bonus",
+      "bonuses": {
+        "biomes": "#minecraft:is_forest",
+        "bonus": 1
+      }
+    },
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    }
+  }
+}

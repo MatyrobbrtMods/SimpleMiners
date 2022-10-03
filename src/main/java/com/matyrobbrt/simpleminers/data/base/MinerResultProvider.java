@@ -6,11 +6,13 @@ import com.matyrobbrt.simpleminers.results.ResultSet;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import cpw.mods.modlauncher.api.LamdbaExceptionUtils;
+import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import org.jetbrains.annotations.NotNull;
@@ -56,4 +58,7 @@ public abstract class MinerResultProvider implements DataProvider {
         return "Miner Results";
     }
 
+    protected final <T> Registry<T> registry(ResourceKey<Registry<T>> key) {
+        return ops.registry(key).orElseThrow();
+    }
 }

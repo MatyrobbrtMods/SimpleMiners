@@ -8,6 +8,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,12 +34,15 @@ public interface ResultPredicate {
         return List.of();
     }
 
-    static ResultPredicate inBiome(HolderSet<Biome> biomes) {
-        return new InBiomePredicate(biomes);
-    }
-
     default ResultPredicate and(ResultPredicate other) {
         if (other == ResultPredicates.TRUE) return this;
         return new AndPredicate(List.of(this, other));
+    }
+
+    static ResultPredicate inBiome(HolderSet<Biome> biomes) {
+        return new InBiomePredicate(biomes);
+    }
+    static ResultPredicate inDimension(ResourceKey<Level> dimension) {
+        return new InDimensionPredicate(dimension);
     }
 }

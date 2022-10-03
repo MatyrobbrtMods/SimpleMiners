@@ -4,12 +4,12 @@ import com.matyrobbrt.simpleminers.results.ItemResult;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
@@ -64,6 +64,20 @@ public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
         for (ItemLike item : items) {
             add(weight, item.asItem().getDefaultInstance(), predicate);
         }
+        return (T) this;
+    }
+
+    default T addWithSameModifier(ResultModifier modifier, Consumer<ResultRecipeBuilder<?>> builderConsumer) {
+        final Consumer<ItemResult> adder = this::add;
+        builderConsumer.accept(new ResultRecipeBuilder<>() {
+            @Override
+            public ResultRecipeBuilder<?> add(List<ItemResult> results) {
+                results.forEach(it -> adder.accept(new ItemResult(
+                        it.item(), it.weight(), it.predicate(), it.modifier().and(modifier)
+                )));
+                return this;
+            }
+        });
         return (T) this;
     }
 }

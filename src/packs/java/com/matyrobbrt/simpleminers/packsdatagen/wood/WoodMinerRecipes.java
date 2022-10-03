@@ -1,7 +1,6 @@
-package com.matyrobbrt.simpleminers.packsdatagen.ore;
+package com.matyrobbrt.simpleminers.packsdatagen.wood;
 
 import com.google.gson.JsonObject;
-import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.SimpleShapedRecipeBuilder;
 import net.minecraft.data.CachedOutput;
@@ -18,43 +17,28 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
-import static com.matyrobbrt.simpleminers.packsdatagen.ore.OreMinerResults.mod;
-
 @ParametersAreNonnullByDefault
-public class OreMinerRecipes extends RecipeProvider {
-    public OreMinerRecipes(DataGenerator pGenerator) {
+public class WoodMinerRecipes extends RecipeProvider {
+    public WoodMinerRecipes(DataGenerator pGenerator) {
         super(pGenerator);
     }
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
-        final ResourceLocation minerId = new ResourceLocation(SimpleMiners.MOD_ID, "ore_miner");
+        final ResourceLocation minerId = new ResourceLocation(SimpleMiners.MOD_ID, "wood_miner");
 
         ConditionalRecipe.builder()
                 .addCondition(new ItemExistsCondition(minerId))
                 .addRecipe(new SimpleShapedRecipeBuilder(minerId, 1)
-                        .pattern("IPI")
+                        .pattern("IAI")
                         .pattern("RCR")
-                        .pattern("IRI")
+                        .pattern("IAI")
                         .define('I', Tags.Items.INGOTS_IRON)
-                        .define('P', Items.DIAMOND_PICKAXE)
+                        .define('A', Items.DIAMOND_AXE)
                         .define('R', Tags.Items.DUSTS_REDSTONE)
                         .define('C', Tags.Items.CHESTS)
                         .finish(new ResourceLocation("hi")))
-                .build(pFinishedRecipeConsumer, mod("ore_miner"));
-
-        final ResourceLocation gemCatalyst = new ResourceLocation(SimpleMiners.MOD_ID, "gem_catalyst");
-        ConditionalRecipe.builder()
-                .addCondition(new ItemExistsCondition(gemCatalyst))
-                .addRecipe(new SimpleShapedRecipeBuilder(gemCatalyst, 1)
-                        .pattern("D")
-                        .pattern("B")
-                        .pattern("E")
-                        .define('D', Tags.Items.GEMS_DIAMOND)
-                        .define('E', Tags.Items.GEMS_EMERALD)
-                        .define('B', Registration.CATALYST_BASE.get())
-                        .finish(new ResourceLocation("hi")))
-                .build(pFinishedRecipeConsumer, mod("gem_catalyst"));
+                .build(pFinishedRecipeConsumer, new ResourceLocation(SimpleMiners.MOD_ID, "wood_miner"));
     }
 
     @Override

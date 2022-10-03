@@ -8,8 +8,8 @@ import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
 
 @MethodsReturnNonnullByDefault
@@ -25,9 +25,9 @@ public class DatagenCheating {
         return ITEMS.cheat(location);
     }
 
-    public record Cheater<T>(ForgeRegistry<T> registry, List<ResourceLocation> registered, Supplier<T> factory) {
+    public record Cheater<T>(ForgeRegistry<T> registry, Set<ResourceLocation> registered, Supplier<T> factory) {
         public Cheater(IForgeRegistry<T> registry, Supplier<T> factory) {
-            this((ForgeRegistry<T>) registry, new ArrayList<>(), factory);
+            this((ForgeRegistry<T>) registry, new HashSet<>(), factory);
         }
 
         @SuppressWarnings("ConstantConditions")

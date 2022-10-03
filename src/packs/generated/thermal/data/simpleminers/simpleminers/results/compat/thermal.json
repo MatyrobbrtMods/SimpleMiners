@@ -63,7 +63,7 @@
           "type": "minecraft:biome_weight_bonus",
           "bonuses": {
             "biomes": {
-              "type": "forge:and",
+              "type": "forge:or",
               "values": [
                 "#minecraft:is_river",
                 "#minecraft:is_ocean",
