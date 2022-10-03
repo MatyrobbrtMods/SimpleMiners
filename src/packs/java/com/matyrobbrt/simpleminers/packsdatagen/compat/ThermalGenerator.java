@@ -18,7 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.holdersets.AndHolderSet;
+import net.minecraftforge.registries.holdersets.OrHolderSet;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ThermalGenerator implements PackGenerator {
                                 .add(4, ore("lead"), ore("silver"), ore("nickel"))
                                 .add(3, ore("cinnabar"))
                                 .add(2, ResultModifier.biomeWeightBonus(
-                                        new BiomeWeightBonusModifier.BonusEntry(new AndHolderSet<>(List.of(
+                                        new BiomeWeightBonusModifier.BonusEntry(new OrHolderSet<>(List.of(
                                                 biomes.getOrCreateTag(BiomeTags.IS_RIVER),
                                                 biomes.getOrCreateTag(BiomeTags.IS_OCEAN),
                                                 biomes.getOrCreateTag(BiomeTags.IS_BEACH)
