@@ -18,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @RegisterPack("powah")
 @ParametersAreNonnullByDefault
-public class PowahCompat implements PackGenerator {
+public class PowahGenerator implements PackGenerator {
     @Override
     public void gather(DataGenerator generator, ExistingFileHelper existingFileHelper, SideProvider sides) {
         generator.addProvider(sides.includeServer(), new MinerResultProvider(generator) {
