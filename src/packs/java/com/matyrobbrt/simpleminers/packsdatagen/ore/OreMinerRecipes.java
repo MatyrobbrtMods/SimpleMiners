@@ -1,4 +1,4 @@
-package com.matyrobbrt.simpleminers.packsdatagen.def;
+package com.matyrobbrt.simpleminers.packsdatagen.ore;
 
 import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
@@ -15,11 +15,11 @@ import net.minecraftforge.common.crafting.conditions.ItemExistsCondition;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
 
-import static com.matyrobbrt.simpleminers.packsdatagen.def.DefaultMinerResults.mod;
+import static com.matyrobbrt.simpleminers.packsdatagen.ore.OreMinerResults.mod;
 
 @ParametersAreNonnullByDefault
-public class DefaultMinerRecipes extends RecipeProvider {
-    public DefaultMinerRecipes(DataGenerator pGenerator) {
+public class OreMinerRecipes extends RecipeProvider {
+    public OreMinerRecipes(DataGenerator pGenerator) {
         super(pGenerator);
     }
 

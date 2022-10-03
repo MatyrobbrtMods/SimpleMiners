@@ -42,7 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import static com.matyrobbrt.simpleminers.packsdatagen.def.DefaultMinerResults.mod;
+import static com.matyrobbrt.simpleminers.packsdatagen.ore.OreMinerResults.mod;
 
 @RegisterPack("mekanism")
 @ParametersAreNonnullByDefault

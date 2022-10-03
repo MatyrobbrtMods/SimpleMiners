@@ -1,4 +1,4 @@
-package com.matyrobbrt.simpleminers.packsdatagen.def;
+package com.matyrobbrt.simpleminers.packsdatagen.ore;
 
 import com.matyrobbrt.simpleminers.data.base.CatalystBuilder;
 import com.matyrobbrt.simpleminers.data.base.MinerTypeBuilder;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public record DefaultMinersProvider(DataGenerator generator) implements DataProvider {
+public record OreMinersProvider(DataGenerator generator) implements DataProvider {
     @Override
     public void run(CachedOutput pOutput) throws IOException {
         MinerTypeBuilder.builder()

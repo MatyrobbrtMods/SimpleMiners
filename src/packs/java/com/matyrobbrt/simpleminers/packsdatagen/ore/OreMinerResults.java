@@ -1,4 +1,4 @@
-package com.matyrobbrt.simpleminers.packsdatagen.def;
+package com.matyrobbrt.simpleminers.packsdatagen.ore;
 
 import com.google.gson.JsonElement;
 import com.matyrobbrt.simpleminers.SimpleMiners;
@@ -22,8 +22,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
-public class DefaultMinerResults extends MinerResultProvider {
-    public DefaultMinerResults(DataGenerator pGenerator, RegistryOps<JsonElement> ops) {
+public class OreMinerResults extends MinerResultProvider {
+    public OreMinerResults(DataGenerator pGenerator, RegistryOps<JsonElement> ops) {
         super(pGenerator, ops);
     }
 
@@ -40,7 +40,7 @@ public class DefaultMinerResults extends MinerResultProvider {
         final Registry<Biome> biomes = ops.registry(Registry.BIOME_REGISTRY).orElseThrow();
 
         final ResultModifier gemsCatalyst = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(
-                Registry.ITEM.getOrCreateTag(DefaultPackGenerator.GEM_CATALYSTS),
+                Registry.ITEM.getOrCreateTag(OrePackGenerator.GEM_CATALYSTS),
                 2, false
         ));
 

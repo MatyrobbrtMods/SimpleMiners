@@ -1,4 +1,4 @@
-package com.matyrobbrt.simpleminers.packsdatagen.def;
+package com.matyrobbrt.simpleminers.packsdatagen.ore;
 
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
@@ -15,16 +15,16 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import static com.matyrobbrt.simpleminers.packsdatagen.def.DefaultMinerResults.mod;
+import static com.matyrobbrt.simpleminers.packsdatagen.ore.OreMinerResults.mod;
 
-@RegisterPack("default")
-public class DefaultPackGenerator implements PackGenerator {
+@RegisterPack("ore")
+public class OrePackGenerator implements PackGenerator {
     public static final TagKey<Item> GEM_CATALYSTS = TagKey.create(Registry.ITEM_REGISTRY, mod("catalysts/gem"));
 
     @SuppressWarnings("deprecation")
     @Override
     public void gather(DataGenerator gen, ExistingFileHelper helper, SideProvider sides) {
-        gen.addProvider(true, new DefaultMinersProvider(gen));
+        gen.addProvider(true, new OreMinersProvider(gen));
 
         gen.addProvider(sides.includeClient(), new ItemModelProvider(gen, SimpleMiners.MOD_ID, helper) {
             @Override
@@ -33,12 +33,12 @@ public class DefaultPackGenerator implements PackGenerator {
             }
         });
 
-        gen.addProvider(sides.includeServer(), new DefaultMinerRecipes(gen));
-        gen.addProvider(sides.includeServer(), new DefaultMinerResults(gen, RegistryOps.create(
+        gen.addProvider(sides.includeServer(), new OreMinerRecipes(gen));
+        gen.addProvider(sides.includeServer(), new OreMinerResults(gen, RegistryOps.create(
                 JsonOps.INSTANCE, RegistryAccess.builtinCopy()
         )));
         gen.addProvider(sides.includeServer(), TagProviderBuilder.builder(gen, Registry.ITEM_REGISTRY, helper)
-                .tag(DefaultPackGenerator.GEM_CATALYSTS, it -> it.addOptional(mod("gem_catalyst"))));
+                .tag(OrePackGenerator.GEM_CATALYSTS, it -> it.addOptional(mod("gem_catalyst"))));
     }
 
 }
