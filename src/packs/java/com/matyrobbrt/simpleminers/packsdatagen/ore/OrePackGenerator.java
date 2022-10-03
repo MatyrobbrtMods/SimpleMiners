@@ -24,7 +24,7 @@ public class OrePackGenerator implements PackGenerator {
     @SuppressWarnings("deprecation")
     @Override
     public void gather(DataGenerator gen, ExistingFileHelper helper, SideProvider sides) {
-        gen.addProvider(true, new OreMinersProvider(gen));
+        gen.addProvider(true, new OreMinerProvider(gen));
 
         gen.addProvider(sides.includeClient(), new ItemModelProvider(gen, SimpleMiners.MOD_ID, helper) {
             @Override

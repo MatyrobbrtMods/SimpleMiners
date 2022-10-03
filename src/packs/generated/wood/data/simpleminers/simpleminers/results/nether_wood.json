@@ -24,13 +24,22 @@
           "Count": 1,
           "id": "minecraft:warped_wart_block"
         },
-        "modifier": {
-          "type": "minecraft:biome_weight_bonus",
-          "bonuses": {
-            "biomes": "minecraft:warped_forest",
-            "bonus": 4
+        "modifier": [
+          {
+            "type": "minecraft:catalyst_weight_bonus",
+            "bonuses": {
+              "bonus": 1,
+              "catalyst": "#simpleminers:catalysts/leaf"
+            }
+          },
+          {
+            "type": "minecraft:biome_weight_bonus",
+            "bonuses": {
+              "biomes": "minecraft:warped_forest",
+              "bonus": 4
+            }
           }
-        },
+        ],
         "weight": 4
       },
       {
@@ -79,13 +88,22 @@
           "Count": 1,
           "id": "minecraft:crimson_nylium"
         },
-        "modifier": {
-          "type": "minecraft:biome_weight_bonus",
-          "bonuses": {
-            "biomes": "minecraft:crimson_forest",
-            "bonus": 4
+        "modifier": [
+          {
+            "type": "minecraft:catalyst_weight_bonus",
+            "bonuses": {
+              "bonus": 1,
+              "catalyst": "#simpleminers:catalysts/leaf"
+            }
+          },
+          {
+            "type": "minecraft:biome_weight_bonus",
+            "bonuses": {
+              "biomes": "minecraft:crimson_forest",
+              "bonus": 4
+            }
           }
-        },
+        ],
         "weight": 4
       },
       {

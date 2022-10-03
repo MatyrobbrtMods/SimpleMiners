@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public record OreMinersProvider(DataGenerator generator) implements DataProvider {
+public record OreMinerProvider(DataGenerator generator) implements DataProvider {
     @Override
     public void run(CachedOutput pOutput) throws IOException {
         MinerTypeBuilder.builder()

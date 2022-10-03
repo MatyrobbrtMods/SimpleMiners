@@ -1,0 +1,32 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:item_exists",
+          "item": "simpleminers:leaf_catalyst"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "B": {
+            "item": "simpleminers:catalyst_base"
+          },
+          "L": {
+            "tag": "minecraft:leaves"
+          }
+        },
+        "pattern": [
+          "L",
+          "B",
+          "L"
+        ],
+        "result": {
+          "item": "simpleminers:leaf_catalyst"
+        }
+      }
+    }
+  ]
+}

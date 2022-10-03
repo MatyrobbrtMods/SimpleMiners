@@ -1,6 +1,7 @@
 package com.matyrobbrt.simpleminers.packsdatagen.wood;
 
 import com.google.gson.JsonObject;
+import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.SimpleShapedRecipeBuilder;
 import net.minecraft.data.CachedOutput;
@@ -8,6 +9,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
@@ -26,7 +28,6 @@ public class WoodMinerRecipes extends RecipeProvider {
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
         final ResourceLocation minerId = new ResourceLocation(SimpleMiners.MOD_ID, "wood_miner");
-
         ConditionalRecipe.builder()
                 .addCondition(new ItemExistsCondition(minerId))
                 .addRecipe(new SimpleShapedRecipeBuilder(minerId, 1)
@@ -39,6 +40,18 @@ public class WoodMinerRecipes extends RecipeProvider {
                         .define('C', Tags.Items.CHESTS)
                         .finish(new ResourceLocation("hi")))
                 .build(pFinishedRecipeConsumer, new ResourceLocation(SimpleMiners.MOD_ID, "wood_miner"));
+
+        final ResourceLocation leafCatalyst = new ResourceLocation(SimpleMiners.MOD_ID, "leaf_catalyst");
+        ConditionalRecipe.builder()
+                .addCondition(new ItemExistsCondition(leafCatalyst))
+                .addRecipe(new SimpleShapedRecipeBuilder(leafCatalyst, 1)
+                        .pattern("L")
+                        .pattern("B")
+                        .pattern("L")
+                        .define('L', ItemTags.LEAVES)
+                        .define('B', Registration.CATALYST_BASE.get())
+                        .finish(new ResourceLocation("hi")))
+                .build(pFinishedRecipeConsumer, new ResourceLocation(SimpleMiners.MOD_ID, "leaf_catalyst"));
     }
 
     @Override

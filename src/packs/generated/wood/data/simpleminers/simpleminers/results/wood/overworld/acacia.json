@@ -30,6 +30,13 @@
           "Count": 1,
           "id": "minecraft:acacia_leaves"
         },
+        "modifier": {
+          "type": "minecraft:catalyst_weight_bonus",
+          "bonuses": {
+            "bonus": 1,
+            "catalyst": "#simpleminers:catalysts/leaf"
+          }
+        },
         "weight": 4
       },
       {

@@ -5,6 +5,7 @@ import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
 import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
 import com.matyrobbrt.simpleminers.data.base.result.ResultRecipeBuilder;
 import com.matyrobbrt.simpleminers.results.ItemResult;
+import com.matyrobbrt.simpleminers.results.modifier.CatalystWeightBonusModifier;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
 import net.minecraft.core.Holder;
@@ -33,10 +34,15 @@ public class WoodMinerResults extends MinerResultProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void gather(ResultConsumer consumer) {
         final Registry<Biome> biomes = registry(Registry.BIOME_REGISTRY);
         final HolderSet<Biome> isForest = biomes.getOrCreateTag(BiomeTags.IS_FOREST);
         final HolderSet<Biome> isDarkForest = HolderSet.direct(biomes.getHolderOrThrow(Biomes.DARK_FOREST));
+
+        final ResultModifier leafModifier = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(
+                Registry.ITEM.getOrCreateTag(WoodPackGenerator.LEAF_CATALYSTS), 1, true
+        ));
 
         record Wood(String name, HolderSet<Biome> biomes, Block log, Block leaves, Item saplings) {}
 
@@ -54,7 +60,7 @@ public class WoodMinerResults extends MinerResultProvider {
                         it.biomes(), 4
                 ), ResultPredicate.inDimension(Level.OVERWORLD), builder -> builder
                         .add(8, it.log)
-                        .add(4, it.leaves)
+                        .add(4, leafModifier, it.leaves)
                         .add(2, it.saplings))
                 .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "wood/overworld/" + it.name)));
 
@@ -71,14 +77,14 @@ public class WoodMinerResults extends MinerResultProvider {
                                 HolderSet.direct(biomes.getHolderOrThrow(Biomes.WARPED_FOREST)), 4
                         ), b -> b
                                 .add(8, Blocks.WARPED_STEM)
-                                .add(4, Blocks.WARPED_WART_BLOCK)
+                                .add(4, leafModifier, Blocks.WARPED_WART_BLOCK)
                                 .add(2, Items.WARPED_FUNGUS)
                                 .add(1, Blocks.SHROOMLIGHT))
                         .addWithSameModifier(ResultModifier.biomeWeightBonus(
                                 HolderSet.direct(biomes.getHolderOrThrow(Biomes.CRIMSON_FOREST)), 4
                         ), b -> b
                                 .add(8, Blocks.CRIMSON_STEM)
-                                .add(4, Blocks.CRIMSON_NYLIUM)
+                                .add(4, leafModifier, Blocks.CRIMSON_NYLIUM)
                                 .add(2, Items.CRIMSON_FUNGUS)
                                 .add(1, Blocks.SHROOMLIGHT)))
                 .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "nether_wood"));
