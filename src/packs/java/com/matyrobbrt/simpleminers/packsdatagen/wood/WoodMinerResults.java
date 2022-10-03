@@ -52,14 +52,14 @@ public class WoodMinerResults extends MinerResultProvider {
                 new Wood("birch", isDarkForest, Blocks.BIRCH_LOG, Blocks.BIRCH_LEAVES, Items.BIRCH_SAPLING),
                 new Wood("acacia", or(biomes.getHolderOrThrow(Biomes.SAVANNA), biomes.getHolderOrThrow(Biomes.SAVANNA_PLATEAU)), Blocks.ACACIA_LOG, Blocks.ACACIA_LEAVES, Items.ACACIA_SAPLING),
                 new Wood("spruce", biomes.getOrCreateTag(BiomeTags.IS_TAIGA), Blocks.SPRUCE_LOG, Blocks.SPRUCE_LEAVES, Items.SPRUCE_SAPLING),
-                new Wood("mangrove", HolderSet.direct(biomes.getHolderOrThrow(Biomes.MANGROVE_SWAMP)), Blocks.MANGROVE_LOG, Blocks.MANGROVE_LEAVES, Items.MANGROVE_LEAVES)
+                new Wood("mangrove", HolderSet.direct(biomes.getHolderOrThrow(Biomes.MANGROVE_SWAMP)), Blocks.MANGROVE_LOG, Blocks.MANGROVE_LEAVES, Items.MANGROVE_PROPAGULE)
         );
 
         woods.forEach(it -> ResultRecipeBuilder.builder("wood")
                 .addCopying(ResultModifier.biomeWeightBonus(
                         it.biomes(), 4
                 ), ResultPredicate.inDimension(Level.OVERWORLD), builder -> builder
-                        .add(8, it.log)
+                        .add(12, it.log)
                         .add(4, leafModifier, it.leaves)
                         .add(2, it.saplings))
                 .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "wood/overworld/" + it.name)));
@@ -76,14 +76,14 @@ public class WoodMinerResults extends MinerResultProvider {
                         .addWithSameModifier(ResultModifier.biomeWeightBonus(
                                 HolderSet.direct(biomes.getHolderOrThrow(Biomes.WARPED_FOREST)), 4
                         ), b -> b
-                                .add(8, Blocks.WARPED_STEM)
+                                .add(12, Blocks.WARPED_STEM)
                                 .add(4, leafModifier, Blocks.WARPED_WART_BLOCK)
                                 .add(2, Items.WARPED_FUNGUS)
                                 .add(1, Blocks.SHROOMLIGHT))
                         .addWithSameModifier(ResultModifier.biomeWeightBonus(
                                 HolderSet.direct(biomes.getHolderOrThrow(Biomes.CRIMSON_FOREST)), 4
                         ), b -> b
-                                .add(8, Blocks.CRIMSON_STEM)
+                                .add(12, Blocks.CRIMSON_STEM)
                                 .add(4, leafModifier, Blocks.CRIMSON_NYLIUM)
                                 .add(2, Items.CRIMSON_FUNGUS)
                                 .add(1, Blocks.SHROOMLIGHT)))

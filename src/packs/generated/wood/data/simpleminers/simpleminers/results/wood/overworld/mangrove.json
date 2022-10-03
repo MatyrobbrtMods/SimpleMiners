@@ -17,7 +17,7 @@
           "Count": 1,
           "id": "minecraft:mangrove_log"
         },
-        "weight": 8
+        "weight": 12
       },
       {
         "item": {
@@ -36,7 +36,7 @@
       {
         "item": {
           "Count": 1,
-          "id": "minecraft:mangrove_leaves"
+          "id": "minecraft:mangrove_propagule"
         },
         "weight": 2
       }
