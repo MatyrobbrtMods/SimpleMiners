@@ -224,15 +224,16 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "SimpleMiners",
-                "Specification-Vendor"    : "Matyrobbrt",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Matyrobbrt",
-                'Built-on-Minecraft': project.mc_version
+                'Specification-Title'     : 'SimpleMiners',
+                'Specification-Vendor'    : 'Matyrobbrt',
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : 'Matyrobbrt',
+                'Built-on-Minecraft'      : project.mc_version
         ])
     }
+    classifier = 'slim'
 }
 
 jar.finalizedBy('reobfJar')
@@ -243,12 +244,13 @@ java.withSourcesJar()
 
 tasks.named('jarJar').configure {
     it.finalizedBy('reobfJarJar')
+    it.classifier = ''
 }
 
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            artifacts = [jar, sourcesJar]
+            artifacts = [tasks.jarJar, sourcesJar]
             artifactId = 'simpleminers'
         }
     }

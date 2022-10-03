@@ -14,6 +14,7 @@ ModsDotGroovy.make {
         description = 'A mod about mining out of thin ai.r'
         authors = ['Matyrobbrt']
 
+        updateJsonUrl = 'https://maven.moddinginquisition.org/releases/com/matyrobbrt/simpleminers/simpleminers/forge-promotions.json'
         // logoFile = 'simplegui.png'
 
         dependencies {
