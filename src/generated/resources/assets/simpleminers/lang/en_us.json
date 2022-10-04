@@ -30,6 +30,7 @@
   "result_modifier.simpleminers.catalyst_bonus_non_additive": "%s weight with catalyst %s",
   "result_predicate.simpleminers.in_biome": "Biome(s): %s",
   "result_predicate.simpleminers.in_dimension": "In dimension: %s",
+  "result_predicate.simpleminers.position": "Miner position on axis %s is %s %s",
   "result_predicate.simpleminers.weather": "Requires weather:%s %s",
   "text.simpleminers.all_of": "all of %s",
   "text.simpleminers.any_of": "any of %s",
