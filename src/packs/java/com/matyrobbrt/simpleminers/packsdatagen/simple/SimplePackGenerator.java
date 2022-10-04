@@ -1,5 +1,6 @@
 package com.matyrobbrt.simpleminers.packsdatagen.simple;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
@@ -13,6 +14,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -40,7 +42,7 @@ public abstract class SimplePackGenerator implements PackGenerator {
         generator.addProvider(sides.includeServer(), new MinerResultProvider(generator) {
             @Override
             protected void gather(ResultConsumer consumer) {
-                addMinerResults(consumer);
+                addMinerResults(consumer, ops);
             }
         });
 
@@ -73,7 +75,7 @@ public abstract class SimplePackGenerator implements PackGenerator {
     // region Server
     protected void addRecipes(Consumer<FinishedRecipe> consumer) {}
     protected void addItemTags(TagProviderBuilder<Item> provider) {}
-    protected void addMinerResults(ResultConsumer consumer) {}
+    protected void addMinerResults(ResultConsumer consumer, RegistryOps<JsonElement> ops) {}
     // endregion
 
     // region Client

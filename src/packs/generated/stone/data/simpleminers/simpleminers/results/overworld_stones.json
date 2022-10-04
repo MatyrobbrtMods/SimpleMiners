@@ -55,7 +55,21 @@
       {
         "item": {
           "Count": 1,
+          "id": "minecraft:tuff"
+        },
+        "weight": 5
+      },
+      {
+        "item": {
+          "Count": 1,
           "id": "minecraft:calcite"
+        },
+        "weight": 2
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:smooth_basalt"
         },
         "weight": 2
       }

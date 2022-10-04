@@ -4,13 +4,43 @@
       "type": "minecraft:in_dimension",
       "dimension": "minecraft:the_nether"
     },
-    "results": {
-      "item": {
-        "Count": 1,
-        "id": "minecraft:netherrack"
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:netherrack"
+        },
+        "weight": 15
       },
-      "weight": 15
-    }
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:basalt"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:basalt_deltas",
+            "bonus": 5
+          }
+        },
+        "weight": 6
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:blackstone"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:basalt_deltas",
+            "bonus": 5
+          }
+        },
+        "weight": 5
+      }
+    ]
   },
   "minerType": "stone"
 }

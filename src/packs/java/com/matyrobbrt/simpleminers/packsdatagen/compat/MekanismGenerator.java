@@ -1,5 +1,6 @@
 package com.matyrobbrt.simpleminers.packsdatagen.compat;
 
+import com.google.gson.JsonElement;
 import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.CatalystBuilder;
@@ -21,6 +22,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -71,7 +73,7 @@ public class MekanismGenerator extends SimplePackGenerator {
 
     @Override
     @SuppressWarnings("deprecation")
-    protected void addMinerResults(ResultConsumer consumer) {
+    protected void addMinerResults(ResultConsumer consumer, RegistryOps<JsonElement> ops) {
         final ResultPredicate overworld = new InDimensionPredicate(Level.OVERWORLD);
 
         final ResultModifier mekCatalyst = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(

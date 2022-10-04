@@ -1,5 +1,6 @@
 package com.matyrobbrt.simpleminers.packsdatagen.wood;
 
+import com.google.gson.JsonElement;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
 import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
@@ -12,6 +13,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.item.Item;
@@ -29,8 +31,9 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class WoodMinerResults extends MinerResultProvider {
-    public WoodMinerResults(DataGenerator generator) {
-        super(generator);
+
+    public WoodMinerResults(DataGenerator dataGenerator, RegistryOps<JsonElement> ops) {
+        super(dataGenerator, ops);
     }
 
     @Override
