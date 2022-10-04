@@ -1,10 +1,11 @@
-package com.matyrobbrt.simpleminers.packsdatagen;
+package com.matyrobbrt.simpleminers.packsdatagen.simple;
 
 import com.google.gson.JsonObject;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
 import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
 import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
+import com.matyrobbrt.simpleminers.packsdatagen.PackGenerator;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Registry;
 import net.minecraft.data.CachedOutput;

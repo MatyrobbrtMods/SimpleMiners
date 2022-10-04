@@ -3,7 +3,7 @@ package com.matyrobbrt.simpleminers.packsdatagen.ore;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
-import com.matyrobbrt.simpleminers.packsdatagen.SimplePackGenerator;
+import com.matyrobbrt.simpleminers.packsdatagen.simple.SimplePackGenerator;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;

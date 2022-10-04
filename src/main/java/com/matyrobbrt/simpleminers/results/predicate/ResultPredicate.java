@@ -39,6 +39,10 @@ public interface ResultPredicate {
         return new AndPredicate(List.of(this, other));
     }
 
+    default ResultPredicate not() {
+        return new NotPredicate(this);
+    }
+
     static ResultPredicate inBiome(HolderSet<Biome> biomes) {
         return new InBiomePredicate(biomes);
     }

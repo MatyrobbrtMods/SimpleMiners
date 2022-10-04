@@ -57,6 +57,12 @@ public final class ResultPredicates {
             Level.RESOURCE_KEY_CODEC.fieldOf("dimension").forGetter(InDimensionPredicate::dimension)
     ).apply(in, InDimensionPredicate::new)));
 
+    public static final Codec<PositionPredicate> POSITION_CODEC = register("position", RecordCodecBuilder.create(in -> in.group(
+            StringRepresentable.fromEnum(PositionPredicate.Comparison::values).fieldOf("comparison").forGetter(PositionPredicate::comparison),
+            StringRepresentable.fromEnum(PositionPredicate.Axis::values).fieldOf("axis").forGetter(PositionPredicate::axis),
+            Codec.INT.fieldOf("position").forGetter(PositionPredicate::position)
+    ).apply(in, PositionPredicate::new)));
+
     private static <T extends Codec<? extends ResultPredicate>> T register(String name, T value) {
         return Registry.register(ResultPredicate.PREDICATES, name, value);
     }

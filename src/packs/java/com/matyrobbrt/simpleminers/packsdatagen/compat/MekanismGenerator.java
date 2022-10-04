@@ -8,7 +8,7 @@ import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
 import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
 import com.matyrobbrt.simpleminers.data.base.result.ResultRecipeBuilder;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
-import com.matyrobbrt.simpleminers.packsdatagen.SimplePackGenerator;
+import com.matyrobbrt.simpleminers.packsdatagen.simple.SimplePackGenerator;
 import com.matyrobbrt.simpleminers.results.modifier.CatalystWeightBonusModifier;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.predicate.InDimensionPredicate;

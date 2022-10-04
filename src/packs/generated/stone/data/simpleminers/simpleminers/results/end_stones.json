@@ -1,0 +1,16 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:the_end"
+    },
+    "results": {
+      "item": {
+        "Count": 1,
+        "id": "minecraft:end_stone"
+      },
+      "weight": 15
+    }
+  },
+  "minerType": "stone"
+}

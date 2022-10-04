@@ -1,0 +1,22 @@
+{
+  "energy": {
+    "capacity": 2000,
+    "ioRate": 200,
+    "usagePerTick": 20
+  },
+  "modelData": {
+    "overlay": "minecraft:textures/block/stone.png"
+  },
+  "rollsPerOperation": 1,
+  "ticksPerOperation": 400,
+  "translation": "Stone Miner",
+  "upgrades": {
+    "minecraft:energy": {
+      "usageDecrease": 8
+    },
+    "minecraft:speed": {
+      "energyUsage": 30,
+      "timeDecrease": 30
+    }
+  }
+}

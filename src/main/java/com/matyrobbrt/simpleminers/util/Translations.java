@@ -36,6 +36,7 @@ public enum Translations {
     CATALYST_BONUS_NON_ADDITIVE("result_modifier", "catalyst_bonus_non_additive", "%s weight with catalyst %s"),
     WEATHER_PREDICATE("result_predicate", "weather", "Requires weather:%s %s"),
     IN_DIMENSION_PREDICATE("result_predicate", "in_dimension", "In dimension: %s"),
+    POSITION_PREDICATE("result_predicate", "position", "Miner position on axis %s is %s %s"),
 
     GUI_MINER("gui", "miner", "Miner"),
     GUI_CATALYSTS("gui", "catalysts", "Catalysts"),

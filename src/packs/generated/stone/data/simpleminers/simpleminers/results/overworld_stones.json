@@ -1,0 +1,65 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:stone"
+        },
+        "predicate": {
+          "type": "minecraft:position",
+          "axis": "y",
+          "comparison": "greater_or_equal",
+          "position": 0
+        },
+        "weight": 15
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:deepslate"
+        },
+        "predicate": {
+          "type": "minecraft:position",
+          "axis": "y",
+          "comparison": "smaller",
+          "position": 0
+        },
+        "weight": 15
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:granite"
+        },
+        "weight": 7
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:diorite"
+        },
+        "weight": 7
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:andesite"
+        },
+        "weight": 6
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:calcite"
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "stone"
+}

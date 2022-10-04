@@ -3,7 +3,7 @@ package com.matyrobbrt.simpleminers.packsdatagen.wood;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.TagProviderBuilder;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
-import com.matyrobbrt.simpleminers.packsdatagen.SimplePackGenerator;
+import com.matyrobbrt.simpleminers.packsdatagen.simple.SimplePackGenerator;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;

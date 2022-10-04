@@ -1,0 +1,16 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:the_nether"
+    },
+    "results": {
+      "item": {
+        "Count": 1,
+        "id": "minecraft:netherrack"
+      },
+      "weight": 15
+    }
+  },
+  "minerType": "stone"
+}
