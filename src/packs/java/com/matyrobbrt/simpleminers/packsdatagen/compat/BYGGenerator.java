@@ -31,7 +31,7 @@ public class BYGGenerator implements PackGenerator {
                         .addCopying(null, new InDimensionPredicate(Level.END), builder -> builder
                                 .add(5, BYGBlocks.AMETRINE_ORE, BYGBlocks.AMETRINE_ORE)
                                 .add(7, BYGBlocks.CRYPTIC_REDSTONE_ORE))
-                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/byg"));
+                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/byg_ores"));
             }
         });
     }

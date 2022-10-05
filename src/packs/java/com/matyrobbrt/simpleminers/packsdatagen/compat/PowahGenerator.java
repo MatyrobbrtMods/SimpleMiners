@@ -29,7 +29,7 @@ public class PowahGenerator implements PackGenerator {
                                 .add(4, cheat("uraninite_ore_poor"))
                                 .add(3, cheat("uraninite_ore"))
                                 .add(2, cheat("uraninite_ore_dense")))
-                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/powah"));
+                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/powah_ores"));
             }
         });
     }

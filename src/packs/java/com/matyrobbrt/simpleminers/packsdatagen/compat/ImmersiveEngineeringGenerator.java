@@ -27,7 +27,7 @@ public class ImmersiveEngineeringGenerator implements PackGenerator {
                 ResultRecipeBuilder.builder("ore", "immersiveengineering")
                         .add(3, ore(EnumMetals.URANIUM))
                         .add(4, ore(EnumMetals.LEAD), ore(EnumMetals.ALUMINUM), ore(EnumMetals.NICKEL), ore(EnumMetals.SILVER))
-                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/immersiveengineering"));
+                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/immersiveengineering_ores"));
             }
         });
     }

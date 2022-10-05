@@ -45,7 +45,7 @@ public class ThermalGenerator implements PackGenerator {
                                                 biomes.getOrCreateTag(BiomeTags.IS_BEACH)
                                         )), 3)
                                 ), ore("apatite")))
-                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/thermal"));
+                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/thermal_ores"));
             }
         });
     }
