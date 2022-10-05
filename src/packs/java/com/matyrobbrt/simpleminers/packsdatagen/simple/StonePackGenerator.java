@@ -33,6 +33,9 @@ import java.util.function.Consumer;
 
 @RegisterPack("stone")
 public class StonePackGenerator extends SimplePackGenerator {
+    public StonePackGenerator() {
+        super(GeneratorType.MINERS, GeneratorType.MINER_RESULTS, GeneratorType.RECIPES);
+    }
 
     @Override
     protected void addMinerResults(ResultConsumer consumer, RegistryOps<JsonElement> ops) {
@@ -73,8 +76,8 @@ public class StonePackGenerator extends SimplePackGenerator {
         MinerTypeBuilder.builder()
                 .translation("Stone Miner")
                 .rollsPerOperation(1)
-                .ticksPerOperation(400)
-                .energy(new MinerType.EnergyInfo(20))
+                .ticksPerOperation(300)
+                .energy(new MinerType.EnergyInfo(25))
                 .upgrades(upgradeBuilder -> upgradeBuilder
                         .add(MinerUpgradeType.SPEED, builder -> builder
                                 .add("timeDecrease", 30)

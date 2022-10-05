@@ -22,16 +22,30 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.EnumSet;
 import java.util.function.Consumer;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class SimplePackGenerator implements PackGenerator {
+    protected final EnumSet<GeneratorType> types;
+    public SimplePackGenerator(EnumSet<GeneratorType> types) {
+        this.types = types;
+    }
+    public SimplePackGenerator(GeneratorType type1, GeneratorType... types) {
+        this(EnumSet.of(type1, types));
+    }
+
+    public SimplePackGenerator() {
+        this(EnumSet.allOf(GeneratorType.class));
+    }
+
     protected DataGenerator generator;
     @Override
     public void gather(DataGenerator generator, ExistingFileHelper existingFileHelper, SideProvider sides) {
         this.generator = generator;
-        generator.addProvider(sides.includeServer(), new RecipeProvider(generator) {
+
+        ifEnabled(GeneratorType.RECIPES, () -> generator.addProvider(sides.includeServer(), new RecipeProvider(generator) {
             @Override
             protected void saveAdvancement(CachedOutput pOutput, JsonObject pAdvancementJson, Path pPath) {
             }
@@ -40,26 +54,28 @@ public abstract class SimplePackGenerator implements PackGenerator {
             protected void buildCraftingRecipes(Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
                 addRecipes(pFinishedRecipeConsumer);
             }
-        });
-        generator.addProvider(sides.includeServer(), new MinerResultProvider(generator) {
+        }));
+        ifEnabled(GeneratorType.MINER_RESULTS, () -> generator.addProvider(sides.includeServer(), new MinerResultProvider(generator) {
             @Override
             protected void gather(ResultConsumer consumer) {
                 addMinerResults(consumer, ops);
             }
+        }));
+
+        ifEnabled(GeneratorType.ITEM_TAGS, () -> {
+            final var tags = TagProviderBuilder.builder(generator, Registry.ITEM_REGISTRY, SimpleMiners.MOD_ID, existingFileHelper);
+            addItemTags(tags);
+            generator.addProvider(sides.includeServer(), tags);
         });
 
-        final var tags = TagProviderBuilder.builder(generator, Registry.ITEM_REGISTRY, SimpleMiners.MOD_ID, existingFileHelper);
-        addItemTags(tags);
-        generator.addProvider(sides.includeServer(), tags);
-
-        generator.addProvider(sides.includeClient(), new ItemModelProvider(generator, SimpleMiners.MOD_ID, existingFileHelper) {
+        ifEnabled(GeneratorType.ITEM_MODELS, () -> generator.addProvider(sides.includeClient(), new ItemModelProvider(generator, SimpleMiners.MOD_ID, existingFileHelper) {
             @Override
             protected void registerModels() {
                 addItemModels(this);
             }
-        });
+        }));
 
-        generator.addProvider(true, new DataProvider() {
+        ifEnabled(GeneratorType.MINERS, () -> generator.addProvider(true, new DataProvider() {
             @Override
             public void run(CachedOutput pOutput) throws IOException {
                 addMiners(pOutput, generator);
@@ -69,7 +85,11 @@ public abstract class SimplePackGenerator implements PackGenerator {
             public String getName() {
                 return "Miners Generator";
             }
-        });
+        }));
+    }
+
+    protected final void ifEnabled(GeneratorType type, Runnable ifEnabled) {
+        if (types.contains(type)) ifEnabled.run();
     }
 
     protected void addMiners(CachedOutput cachedOutput, DataGenerator generator) throws IOException {}
@@ -83,4 +103,8 @@ public abstract class SimplePackGenerator implements PackGenerator {
     // region Client
     protected void addItemModels(ItemModelProvider provider) {}
     // endregion
+
+    protected enum GeneratorType {
+        ITEM_MODELS, MINERS, RECIPES, ITEM_TAGS, MINER_RESULTS
+    }
 }
