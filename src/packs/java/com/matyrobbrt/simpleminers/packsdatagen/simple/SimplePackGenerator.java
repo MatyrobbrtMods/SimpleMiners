@@ -27,8 +27,10 @@ import java.util.function.Consumer;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class SimplePackGenerator implements PackGenerator {
+    protected DataGenerator generator;
     @Override
     public void gather(DataGenerator generator, ExistingFileHelper existingFileHelper, SideProvider sides) {
+        this.generator = generator;
         generator.addProvider(sides.includeServer(), new RecipeProvider(generator) {
             @Override
             protected void saveAdvancement(CachedOutput pOutput, JsonObject pAdvancementJson, Path pPath) {

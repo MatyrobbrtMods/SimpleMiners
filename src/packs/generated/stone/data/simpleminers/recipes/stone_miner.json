@@ -1,0 +1,41 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:item_exists",
+          "item": "simpleminers:stone_miner"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "C": {
+            "tag": "forge:chests"
+          },
+          "D": {
+            "item": "minecraft:diorite"
+          },
+          "G": {
+            "item": "minecraft:granite"
+          },
+          "P": {
+            "item": "minecraft:iron_pickaxe"
+          },
+          "S": {
+            "tag": "forge:stone"
+          }
+        },
+        "pattern": [
+          "GPD",
+          "SCS",
+          "GSD"
+        ],
+        "result": {
+          "item": "simpleminers:stone_miner"
+        }
+      }
+    }
+  ]
+}
