@@ -1,1 +1,1 @@
-create,bigreactors,byg,immersiveengineering,thermal,powah,stone
+create,bigreactors,byg,immersiveengineering,thermal,powah,stone,soil
