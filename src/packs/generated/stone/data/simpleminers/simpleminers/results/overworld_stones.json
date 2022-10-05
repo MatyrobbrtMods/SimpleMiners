@@ -62,6 +62,20 @@
       {
         "item": {
           "Count": 1,
+          "id": "minecraft:sandstone"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "#forge:is_desert",
+            "bonus": 5
+          }
+        },
+        "weight": 3
+      },
+      {
+        "item": {
+          "Count": 1,
           "id": "minecraft:calcite"
         },
         "weight": 2

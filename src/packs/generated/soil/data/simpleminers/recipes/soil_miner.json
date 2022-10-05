@@ -1,0 +1,41 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:item_exists",
+          "item": "simpleminers:soil_miner"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "C": {
+            "tag": "forge:chests"
+          },
+          "D": {
+            "tag": "minecraft:dirt"
+          },
+          "S": {
+            "item": "minecraft:iron_shovel"
+          },
+          "a": {
+            "tag": "minecraft:sand"
+          },
+          "s": {
+            "item": "minecraft:soul_soil"
+          }
+        },
+        "pattern": [
+          "DSD",
+          "aCa",
+          "sDs"
+        ],
+        "result": {
+          "item": "simpleminers:soil_miner"
+        }
+      }
+    }
+  ]
+}

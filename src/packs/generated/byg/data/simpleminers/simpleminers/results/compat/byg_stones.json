@@ -1,0 +1,75 @@
+{
+  "copying": [
+    {
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:the_end"
+      },
+      "results": [
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:ether_stone"
+          },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:ethereal_islands"
+          },
+          "weight": 20
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:purpur_stone"
+          },
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:the_nether"
+      },
+      "results": [
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:brimstone"
+          },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:brimstone_caverns"
+          },
+          "weight": 20
+        },
+        {
+          "item": {
+            "Count": 1,
+            "id": "byg:magmatic_stone"
+          },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:magma_wastes"
+          },
+          "weight": 20
+        }
+      ]
+    },
+    {
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:overworld"
+      },
+      "results": {
+        "item": {
+          "Count": 1,
+          "id": "byg:scoria_stone"
+        },
+        "weight": 6
+      }
+    }
+  ],
+  "minerType": "stone",
+  "requiredMod": "byg"
+}

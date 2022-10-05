@@ -1,0 +1,26 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "create:scoria"
+        },
+        "weight": 6
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "create:limestone"
+        },
+        "weight": 6
+      }
+    ]
+  },
+  "minerType": "stone",
+  "requiredMod": "create"
+}

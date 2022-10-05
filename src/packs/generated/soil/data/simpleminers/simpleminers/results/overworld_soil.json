@@ -1,0 +1,53 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:overworld"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:dirt"
+        },
+        "weight": 15
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:coarse_dirt"
+        },
+        "weight": 7
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:podzol"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "#minecraft:is_taiga",
+            "bonus": 4
+          }
+        },
+        "weight": 6
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:rooted_dirt"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "#forge:is_lush",
+            "bonus": 4
+          }
+        },
+        "weight": 5
+      }
+    ]
+  },
+  "minerType": "soil"
+}

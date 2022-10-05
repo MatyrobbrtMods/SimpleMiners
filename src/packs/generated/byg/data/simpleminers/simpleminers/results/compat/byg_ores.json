@@ -11,6 +11,10 @@
             "Count": 1,
             "id": "byg:emeraldite_ore"
           },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:wailing_garth"
+          },
           "weight": 6
         },
         {
@@ -18,19 +22,20 @@
             "Count": 1,
             "id": "byg:anthracite_ore"
           },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:brimstone_caverns"
+          },
           "weight": 6
         },
         {
           "item": {
             "Count": 1,
-            "id": "byg:emeraldite_ore"
-          },
-          "weight": 3
-        },
-        {
-          "item": {
-            "Count": 1,
             "id": "byg:pendorite_ore"
+          },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:embur_bog"
           },
           "weight": 2
         }
@@ -47,12 +52,9 @@
             "Count": 1,
             "id": "byg:ametrine_ore"
           },
-          "weight": 5
-        },
-        {
-          "item": {
-            "Count": 1,
-            "id": "byg:ametrine_ore"
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:viscal_isles"
           },
           "weight": 5
         },
@@ -60,6 +62,10 @@
           "item": {
             "Count": 1,
             "id": "byg:cryptic_redstone_ore"
+          },
+          "predicate": {
+            "type": "minecraft:in_biome",
+            "biomes": "byg:cryptic_wastes"
           },
           "weight": 7
         }

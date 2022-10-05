@@ -1,0 +1,32 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:the_end"
+    },
+    "results": {
+      "item": {
+        "Count": 1,
+        "id": "byg:ether_soil"
+      },
+      "predicate": {
+        "type": "minecraft:in_biome",
+        "biomes": "byg:ethereal_islands"
+      },
+      "weight": 7
+    }
+  },
+  "minerType": "soil",
+  "requiredMod": "byg",
+  "results": {
+    "item": {
+      "Count": 1,
+      "id": "byg:ether_grass"
+    },
+    "predicate": {
+      "type": "minecraft:in_biome",
+      "biomes": "byg:ethereal_islands"
+    },
+    "weight": 2
+  }
+}

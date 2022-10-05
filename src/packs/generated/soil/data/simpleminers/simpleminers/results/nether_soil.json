@@ -1,0 +1,39 @@
+{
+  "copying": {
+    "predicate": {
+      "type": "minecraft:in_dimension",
+      "dimension": "minecraft:the_nether"
+    },
+    "results": [
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:soul_sand"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:soul_sand_valley",
+            "bonus": 7
+          }
+        },
+        "weight": 6
+      },
+      {
+        "item": {
+          "Count": 1,
+          "id": "minecraft:soul_soil"
+        },
+        "modifier": {
+          "type": "minecraft:biome_weight_bonus",
+          "bonuses": {
+            "biomes": "minecraft:soul_sand_valley",
+            "bonus": 7
+          }
+        },
+        "weight": 2
+      }
+    ]
+  },
+  "minerType": "soil"
+}
