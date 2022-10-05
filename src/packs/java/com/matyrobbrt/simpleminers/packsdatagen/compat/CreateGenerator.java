@@ -6,22 +6,16 @@ import com.matyrobbrt.simpleminers.data.base.result.ResultConsumer;
 import com.matyrobbrt.simpleminers.data.base.result.ResultRecipeBuilder;
 import com.matyrobbrt.simpleminers.packsdatagen.PackGenerator;
 import com.matyrobbrt.simpleminers.packsdatagen.RegisterPack;
-import com.matyrobbrt.simpleminers.results.ItemResult;
-import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
-import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
 import com.matyrobbrt.simpleminers.results.predicate.InDimensionPredicate;
-import com.matyrobbrt.simpleminers.results.predicate.ResultPredicate;
 import com.mojang.serialization.JsonOps;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.content.palettes.AllPaletteStoneTypes;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 @RegisterPack("create")
@@ -34,12 +28,13 @@ public class CreateGenerator implements PackGenerator {
             @Override
             protected void gather(@NotNull ResultConsumer consumer) {
                 ResultRecipeBuilder.builder("ore", "create")
-                        .add(new ItemResult(
-                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("create:zinc_ore"))
-                                        .getDefaultInstance(),
-                                6, new InDimensionPredicate(Level.OVERWORLD), ResultModifiers.NOP
-                        ))
+                        .add(6, new InDimensionPredicate(Level.OVERWORLD), AllBlocks.ZINC_ORE.get())
                         .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/create_ores"));
+
+                ResultRecipeBuilder.builder("stone", "create")
+                        .addCopying(null, new InDimensionPredicate(Level.OVERWORLD), builder -> builder
+                                .add(6, AllPaletteStoneTypes.SCORIA.baseBlock.get(), AllPaletteStoneTypes.LIMESTONE.baseBlock.get()))
+                        .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "compat/create_stones"));
             }
         });
     }
