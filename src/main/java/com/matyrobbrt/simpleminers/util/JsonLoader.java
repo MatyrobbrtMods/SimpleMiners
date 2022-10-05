@@ -16,6 +16,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.ModList;
+import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -24,8 +25,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.StreamSupport;
 
 public class JsonLoader {
@@ -130,8 +133,11 @@ public class JsonLoader {
         if (!Files.exists(path)) {
             Files.createDirectories(path);
         }
+
         final List<MinerType> types = new ArrayList<>();
-        loadMinersFromDir(types, path);
+        final Set<String> known = new HashSet<>();
+
+        loadMinersFromDir(types, known, path);
 
         final List<SimpleMinersRepositorySource.PackEntry> entries = new ArrayList<>();
         entries.addAll(SimpleMinersRepositorySource.INSTANCE.findCandidates());
@@ -140,7 +146,7 @@ public class JsonLoader {
         for (SimpleMinersRepositorySource.PackEntry packEntry : entries) {
             final var inZip = packEntry.pathGetter().get("miners");
             if (Files.exists(inZip)) {
-                loadMinersFromDir(types, inZip);
+                loadMinersFromDir(types, known, inZip);
             }
             packEntry.pathGetter().close();
         }
@@ -148,16 +154,20 @@ public class JsonLoader {
         return types;
     }
 
-    private static void loadMinersFromDir(List<MinerType> types, Path path) throws IOException {
+    private static void loadMinersFromDir(List<MinerType> types, Set<String> known, Path path) throws IOException {
         try (final var stream = Files.walk(path, 1)) {
             final var iterator = stream.iterator();
             while (iterator.hasNext()) {
                 final var p = iterator.next();
                 final String fileName = p.getFileName().toString();
-                if (!fileName.endsWith(".json")) continue;
+                if (Files.isDirectory(p) || !FilenameUtils.getExtension(fileName).equals("json")) continue;
                 try (final var reader = Files.newBufferedReader(p)) {
                     final JsonObject json = GSON.fromJson(reader, JsonObject.class);
-                    types.add(read(fileName.replace(".json", ""), json));
+                    final String name = FilenameUtils.removeExtension(fileName);
+                    if (!known.contains(name)) {
+                        types.add(read(name, json));
+                        known.add(name);
+                    }
                 }
             }
         }
@@ -166,10 +176,6 @@ public class JsonLoader {
     public static Map<String, CatalystData> loadCatalysts() throws IOException, URISyntaxException {
         final Path path = SimpleMiners.BASE_PATH.resolve("catalysts.json");
         final Map<String, CatalystData> catalysts = new HashMap<>();
-
-        if (Files.exists(path)) {
-            loadCatalystsFromFile(catalysts, path);
-        }
 
         final List<SimpleMinersRepositorySource.PackEntry> entries = new ArrayList<>();
         entries.addAll(SimpleMinersRepositorySource.INSTANCE.findCandidates());
@@ -181,6 +187,11 @@ public class JsonLoader {
                 loadCatalystsFromFile(catalysts, inZip);
             }
             packEntry.pathGetter().close();
+        }
+
+        if (Files.exists(path)) {
+            // Read catalysts from file *after* builtins, so they can be overridden
+            loadCatalystsFromFile(catalysts, path);
         }
 
         return catalysts;
