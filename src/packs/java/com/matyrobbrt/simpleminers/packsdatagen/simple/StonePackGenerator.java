@@ -52,6 +52,10 @@ public class StonePackGenerator extends SimplePackGenerator {
                         .add(7, Blocks.GRANITE, Blocks.DIORITE)
                         .add(6, Blocks.ANDESITE)
                         .add(5, Blocks.TUFF)
+                        .add(3, ResultModifier.biomeWeightBonus(
+                                biomes.getOrCreateTag(Tags.Biomes.IS_DESERT),
+                                5
+                        ), Items.SANDSTONE)
                         .add(2, Blocks.CALCITE, Blocks.SMOOTH_BASALT))
                 .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "overworld_stones"));
 
