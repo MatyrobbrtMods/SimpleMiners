@@ -97,7 +97,7 @@ public class WoodMinerResults extends MinerResultProvider {
 
     public record Wood(String name, @Nullable HolderSet<Biome> biomes, Block log, Block leaves, Item saplings) {
         @CanIgnoreReturnValue
-        public <T extends ResultRecipeBuilder<T>> ResultRecipeBuilder<T> add(ResultRecipeBuilder<T> builder) {
+        public ResultRecipeBuilder<?> add(ResultRecipeBuilder<?> builder) {
             return builder.add(12, log)
                     .add(4, LEAF_MODIFIER, leaves)
                     .add(2, saplings);

@@ -91,7 +91,7 @@ public class PacksDatagen {
                                 .getConstructor()
                                 .newInstance();
 
-                        packs.put(it.annotationData().get("value").toString(), generator);
+                        packs.put(it.annotationData().containsKey("value") ? it.annotationData().get("value").toString() : generator.packId(), generator);
                     } catch (InstantiationException | ClassNotFoundException | IllegalAccessException |
                              InvocationTargetException | NoSuchMethodException e) {
                         throw new RuntimeException(e);

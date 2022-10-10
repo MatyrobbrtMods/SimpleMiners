@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 public @interface RegisterPack {
     Type TYPE = Type.getType(RegisterPack.class);
 
-    String value();
+    String value() default "";
 }
