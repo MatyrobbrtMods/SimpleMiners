@@ -24,6 +24,7 @@ public enum Translations {
     ITEM_STORED_ENERGY("item_tooltip", "stored_energy", "Stored energy: %s FE"),
     ITEM_STORED_UPGRADES("item_tooltip", "stored_upgrades", "Stored upgrades: %s"),
     ITEM_STORED_CATALYSTS("item_tooltip", "stored_catalysts", "Stored catalysts: %s"),
+    ITEM_MINER_CATALYST("item_tooltip", "miner_catalyst", "This item is a Miner Catalyst"),
 
     ANY_OF("text", "any_of", "any of %s"),
     ALL_OF("text", "all_of", "all of %s"),

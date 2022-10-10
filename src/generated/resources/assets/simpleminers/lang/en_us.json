@@ -13,6 +13,7 @@
   "item.simpleminers.speed_upgrade": "Speed Upgrade",
   "item.simpleminers.upgrade_base": "Upgrade Base",
   "itemGroup.simpleminers": "Simple Miners",
+  "item_tooltip.simpleminers.miner_catalyst": "This item is a Miner Catalyst",
   "item_tooltip.simpleminers.stored_catalysts": "Stored catalysts: %s",
   "item_tooltip.simpleminers.stored_energy": "Stored energy: %s FE",
   "item_tooltip.simpleminers.stored_upgrades": "Stored upgrades: %s",

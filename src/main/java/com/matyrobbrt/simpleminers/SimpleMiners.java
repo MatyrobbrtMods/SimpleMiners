@@ -13,9 +13,12 @@ import com.matyrobbrt.simpleminers.results.ResultSet;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
 import com.matyrobbrt.simpleminers.results.predicate.ResultPredicates;
 import com.matyrobbrt.simpleminers.util.JsonLoader;
+import com.matyrobbrt.simpleminers.util.SMConfig;
+import com.matyrobbrt.simpleminers.util.Translations;
 import com.matyrobbrt.simpleminers.util.pack.BuiltInPacksRepository;
 import com.matyrobbrt.simpleminers.util.pack.SimpleMinersRepositorySource;
 import com.mojang.serialization.Lifecycle;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.MappedRegistry;
@@ -35,9 +38,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -85,6 +91,8 @@ public class SimpleMiners {
 
         ResultModifiers.clinit();
         ResultPredicates.clinit();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SMConfig.Client.SPEC, MOD_ID + "-client.toml");
 
         bus.addListener((final FMLCommonSetupEvent event) -> SimpleMinersNetwork.register());
 
@@ -136,6 +144,12 @@ public class SimpleMiners {
             final var node = Commands.literal(MOD_ID);
             BuiltInPacksCommands.register(node);
             event.getDispatcher().register(node);
+        });
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, (final ItemTooltipEvent event) -> {
+            if (Boolean.TRUE.equals(SMConfig.Client.CATALYST_TOOLTIP.get()) && isCatalyst(event.getItemStack())) {
+                event.getToolTip().add(Translations.ITEM_MINER_CATALYST.get().withStyle(ChatFormatting.GOLD));
+            }
         });
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
