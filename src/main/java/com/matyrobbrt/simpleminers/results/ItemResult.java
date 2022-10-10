@@ -1,6 +1,5 @@
 package com.matyrobbrt.simpleminers.results;
 
-import com.google.gson.JsonElement;
 import com.matyrobbrt.simpleminers.miner.MinerBE;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifier;
 import com.matyrobbrt.simpleminers.results.modifier.ResultModifiers;
@@ -9,18 +8,12 @@ import com.matyrobbrt.simpleminers.results.predicate.ResultPredicates;
 import com.matyrobbrt.simpleminers.util.Translations;
 import com.matyrobbrt.simpleminers.util.Utils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -47,8 +40,6 @@ public record ItemResult(ItemStack item, int weight, ResultPredicate predicate, 
     }
 
     public static final int DEFAULT_WEIGHT = 1;
-    public static final Lazy<RegistryOps<JsonElement>> OPS = Lazy.of(() -> RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy()));
-    public static final Lazy<RegistryOps<Tag>> NBT_OPS = Lazy.of(() -> RegistryOps.create(NbtOps.INSTANCE, RegistryAccess.builtinCopy()));
 
     public List<Component> tooltip() {
         final List<Component> components = new ArrayList<>();
