@@ -1,7 +1,9 @@
 package com.matyrobbrt.simpleminers.client;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.matyrobbrt.simpleminers.SimpleMiners;
+import com.matyrobbrt.simpleminers.util.JsonBuilder;
 import com.mojang.blaze3d.platform.NativeImage;
 import cpw.mods.modlauncher.api.LamdbaExceptionUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -23,12 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class DynamicAssetsRP extends AbstractPackResources {
     public static final DynamicAssetsRP INSTANCE = new DynamicAssetsRP();
+    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
     private final Map<String, IOSupplier> suppliers = new HashMap<>();
 
@@ -83,6 +87,11 @@ public class DynamicAssetsRP extends AbstractPackResources {
 
     public void add(String path, String text) {
         final byte[] bytes = text.trim().getBytes(StandardCharsets.UTF_8);
+        add(path, () -> new ByteArrayInputStream(bytes));
+    }
+
+    public void add(String path, JsonBuilder json) {
+        final byte[] bytes = GSON.toJson(json.delegate()).getBytes(StandardCharsets.UTF_8);
         add(path, () -> new ByteArrayInputStream(bytes));
     }
 

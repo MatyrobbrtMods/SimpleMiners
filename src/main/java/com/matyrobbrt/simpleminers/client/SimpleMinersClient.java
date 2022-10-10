@@ -4,6 +4,7 @@ import com.matyrobbrt.simpleminers.Registration;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.menu.MinerMenu;
 import com.matyrobbrt.simpleminers.miner.MinerType;
+import com.matyrobbrt.simpleminers.util.JsonBuilder;
 import com.matyrobbrt.simpleminers.util.pack.BuiltInPacksRepository;
 import com.matyrobbrt.simpleminers.util.pack.SimpleMinersRepositorySource;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -14,6 +15,8 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.function.Function;
 
 public class SimpleMinersClient {
     public SimpleMinersClient(IEventBus modBus) {
@@ -49,42 +52,34 @@ public class SimpleMinersClient {
 
         DynamicAssetsRP.INSTANCE.addAnimatedWithOverlay(new ResourceLocation(SimpleMiners.MOD_ID, "textures/block/drill.png"),
                 minerType.modelData().overlay(), "assets/simpleminers/textures/block/%s_miner.png".formatted(minerType.name()), 4);
-        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/textures/block/%s_miner.png.mcmeta".formatted(minerType.name()), """
-                    {
-                        "animation": {
-                            "height": 16,
-                            "frametime": 1,
-                            "frames": [0, 1, 2, 3, 2, 1]
-                        }
-                    }""");
+        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/textures/block/%s_miner.png.mcmeta".formatted(minerType.name()), new JsonBuilder()
+                .add("animation", new JsonBuilder()
+                        .add("height", 16)
+                        .add("frametime", 1)
+                        .addArray("frames", 0, 1, 2, 3, 2, 1)));
+
         DynamicAssetsRP.INSTANCE.addWithOverlay(new ResourceLocation(SimpleMiners.MOD_ID, "textures/block/drill_down.png"),
                 minerType.modelData().overlay(), "assets/simpleminers/textures/block/%s_miner_down.png".formatted(minerType.name()));
         DynamicAssetsRP.INSTANCE.addWithOverlay(new ResourceLocation(SimpleMiners.MOD_ID, "textures/block/drill_top.png"),
                 minerType.modelData().overlay(), "assets/simpleminers/textures/block/%s_miner_top.png".formatted(minerType.name()));
 
-        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/models/block/%s_miner.json".formatted(minerType.name()), """
-                {
-                  "parent": "minecraft:block/orientable",
-                  "textures": {
-                    "side": "simpleminers:block/%1$s_miner",
-                    "front": "simpleminers:block/%1$s_miner",
-                    "top": "simpleminers:block/%1$s_miner_top",
-                    "bottom": "simpleminers:block/%1$s_miner_down"
-                  }
-                }""".formatted(minerType.name()));
-        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/blockstates/%s_miner.json".formatted(minerType.name()), """
-                {
-                  "variants": {
-                    "": {
-                      "model": "simpleminers:block/%s_miner"
-                    }
-                  }
-                }""".formatted(minerType.name()));
+        final Function<String, String> textureGetter = b -> "simpleminers:block/%s_miner%s"
+                .formatted(minerType.name(), b);
+        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/models/block/%s_miner.json".formatted(minerType.name()), new JsonBuilder()
+                .add("parent", "minecraft:block/orientable")
+                .add("textures", new JsonBuilder()
+                        .add("side", textureGetter.apply(""))
+                        .add("front", textureGetter.apply(""))
+                        .add("top", textureGetter.apply("_top"))
+                        .add("bottom", textureGetter.apply("_down"))));
 
-        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/models/item/%s_miner.json".formatted(minerType.name()), """
-                {
-                  "parent": "simpleminers:block/%s_miner"
-                }""".formatted(minerType.name()));
+        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/blockstates/%s_miner.json".formatted(minerType.name()), new JsonBuilder()
+                .add("variants", new JsonBuilder()
+                        .add("", new JsonBuilder()
+                                .add("model", "simpleminers:block/" + minerType.name() + "_miner"))));
+
+        DynamicAssetsRP.INSTANCE.add("assets/simpleminers/models/item/%s_miner.json".formatted(minerType.name()), new JsonBuilder()
+                .add("parent", "simpleminers:block/" + minerType.name() + "_miner"));
 
         if (minerType.translation() != null) {
             DynamicAssetsRP.INSTANCE.getLang("en_us").put(minerType.block().getDescriptionId(), minerType.translation());
