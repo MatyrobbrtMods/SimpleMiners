@@ -1,5 +1,6 @@
 package com.matyrobbrt.simpleminers.packsdatagen.wood;
 
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.gson.JsonElement;
 import com.matyrobbrt.simpleminers.SimpleMiners;
 import com.matyrobbrt.simpleminers.data.base.MinerResultProvider;
@@ -25,29 +26,26 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.holdersets.OrHolderSet;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class WoodMinerResults extends MinerResultProvider {
+    private static final ResultModifier LEAF_MODIFIER = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(
+            Registry.ITEM.getOrCreateTag(WoodPackGenerator.LEAF_CATALYSTS), 1, true
+    ));
 
     public WoodMinerResults(DataGenerator dataGenerator, RegistryOps<JsonElement> ops) {
         super(dataGenerator, ops);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     protected void gather(ResultConsumer consumer) {
         final Registry<Biome> biomes = registry(Registry.BIOME_REGISTRY);
         final HolderSet<Biome> isForest = biomes.getOrCreateTag(BiomeTags.IS_FOREST);
         final HolderSet<Biome> isDarkForest = HolderSet.direct(biomes.getHolderOrThrow(Biomes.DARK_FOREST));
-
-        final ResultModifier leafModifier = ResultModifier.catalystWeightBonus(new CatalystWeightBonusModifier.Entry(
-                Registry.ITEM.getOrCreateTag(WoodPackGenerator.LEAF_CATALYSTS), 1, true
-        ));
-
-        record Wood(String name, HolderSet<Biome> biomes, Block log, Block leaves, Item saplings) {}
 
         final List<Wood> woods = List.of(
                 new Wood("oak", isForest, Blocks.OAK_LOG, Blocks.OAK_LEAVES, Items.OAK_SAPLING),
@@ -61,10 +59,7 @@ public class WoodMinerResults extends MinerResultProvider {
         woods.forEach(it -> ResultRecipeBuilder.builder("wood")
                 .addCopying(ResultModifier.biomeWeightBonus(
                         it.biomes(), 4
-                ), ResultPredicate.inDimension(Level.OVERWORLD), builder -> builder
-                        .add(12, it.log)
-                        .add(4, leafModifier, it.leaves)
-                        .add(2, it.saplings))
+                ), ResultPredicate.inDimension(Level.OVERWORLD), it::add)
                 .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "wood/overworld/" + it.name)));
 
         ResultRecipeBuilder.builder("wood")
@@ -80,14 +75,14 @@ public class WoodMinerResults extends MinerResultProvider {
                                 HolderSet.direct(biomes.getHolderOrThrow(Biomes.WARPED_FOREST)), 4
                         ), b -> b
                                 .add(12, Blocks.WARPED_STEM)
-                                .add(4, leafModifier, Blocks.WARPED_WART_BLOCK)
+                                .add(4, LEAF_MODIFIER, Blocks.WARPED_WART_BLOCK)
                                 .add(2, Items.WARPED_FUNGUS)
                                 .add(1, Blocks.SHROOMLIGHT))
                         .addWithSameModifier(ResultModifier.biomeWeightBonus(
                                 HolderSet.direct(biomes.getHolderOrThrow(Biomes.CRIMSON_FOREST)), 4
                         ), b -> b
                                 .add(12, Blocks.CRIMSON_STEM)
-                                .add(4, leafModifier, Blocks.CRIMSON_NYLIUM)
+                                .add(4, LEAF_MODIFIER, Blocks.CRIMSON_NYLIUM)
                                 .add(2, Items.CRIMSON_FUNGUS)
                                 .add(1, Blocks.SHROOMLIGHT)))
                 .save(consumer, new ResourceLocation(SimpleMiners.MOD_ID, "nether_wood"));
@@ -98,5 +93,14 @@ public class WoodMinerResults extends MinerResultProvider {
         return new OrHolderSet<>(Arrays.stream(holders)
                 .<HolderSet<T>>map(HolderSet::direct)
                 .toList());
+    }
+
+    public record Wood(String name, @Nullable HolderSet<Biome> biomes, Block log, Block leaves, Item saplings) {
+        @CanIgnoreReturnValue
+        public <T extends ResultRecipeBuilder<T>> ResultRecipeBuilder<T> add(ResultRecipeBuilder<T> builder) {
+            return builder.add(12, log)
+                    .add(4, LEAF_MODIFIER, leaves)
+                    .add(2, saplings);
+        }
     }
 }

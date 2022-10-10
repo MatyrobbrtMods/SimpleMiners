@@ -80,4 +80,17 @@ public interface ResultRecipeBuilder<T extends ResultRecipeBuilder<?>> {
         });
         return (T) this;
     }
+    default T addWithSamePredicate(ResultPredicate predicate, Consumer<ResultRecipeBuilder<?>> builderConsumer) {
+        final Consumer<ItemResult> adder = this::add;
+        builderConsumer.accept(new ResultRecipeBuilder<>() {
+            @Override
+            public ResultRecipeBuilder<?> add(List<ItemResult> results) {
+                results.forEach(it -> adder.accept(new ItemResult(
+                        it.item(), it.weight(), it.predicate().and(predicate), it.modifier()
+                )));
+                return this;
+            }
+        });
+        return (T) this;
+    }
 }
