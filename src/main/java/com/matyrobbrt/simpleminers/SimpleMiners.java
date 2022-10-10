@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -190,5 +191,10 @@ public class SimpleMiners {
 
     public static Item getTabIcon() {
         return miners.isEmpty() ? Registration.ENERGY_UPGRADE.get() : miners.get(0).block().asItem();
+    }
+
+    public static final TagKey<Item> CATALYSTS_TAG = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(MOD_ID, "catalysts"));
+    public static boolean isCatalyst(ItemStack stack) {
+        return stack.getItem() instanceof MinerCatalyst || stack.is(CATALYSTS_TAG);
     }
 }
