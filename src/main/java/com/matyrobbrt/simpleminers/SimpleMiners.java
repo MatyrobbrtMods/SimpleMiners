@@ -75,13 +75,14 @@ public class SimpleMiners {
     public static Map<Item, JsonLoader.CatalystData> catalysts;
 
     public SimpleMiners() {
-        final var container = ModLoadingContext.get().getActiveContainer();
+        final var context = ModLoadingContext.get();
+        final var container = context.getActiveContainer();
         BuiltInPacksRepository.instance = new BuiltInPacksRepository(
                 container.getModInfo().getOwningFile()
                         .getFile().findResource("builtinPacks")
         );
 
-        final var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        final var bus = context.<FMLJavaModLoadingContext>extension().getModEventBus();
         Registration.ITEMS.register(bus);
         Registration.BLOCKS.register(bus);
         Registration.MENU_TYPES.register(bus);
@@ -92,7 +93,7 @@ public class SimpleMiners {
         ResultModifiers.clinit();
         ResultPredicates.clinit();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SMConfig.Client.SPEC, MOD_ID + "-client.toml");
+        context.registerConfig(ModConfig.Type.CLIENT, SMConfig.Client.SPEC, MOD_ID + "-client.toml");
 
         bus.addListener((final FMLCommonSetupEvent event) -> SimpleMinersNetwork.register());
 
