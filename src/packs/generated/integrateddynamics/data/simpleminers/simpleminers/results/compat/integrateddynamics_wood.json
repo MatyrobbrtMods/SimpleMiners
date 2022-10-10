@@ -1,0 +1,46 @@
+{
+  "minerType": "wood",
+  "requiredMod": "integrateddynamics",
+  "results": [
+    {
+      "item": {
+        "Count": 1,
+        "id": "integrateddynamics:menril_log"
+      },
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:overworld"
+      },
+      "weight": 12
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "integrateddynamics:menril_leaves"
+      },
+      "modifier": {
+        "type": "minecraft:catalyst_weight_bonus",
+        "bonuses": {
+          "bonus": 1,
+          "catalyst": "#simpleminers:catalysts/leaf"
+        }
+      },
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:overworld"
+      },
+      "weight": 4
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "integrateddynamics:menril_sapling"
+      },
+      "predicate": {
+        "type": "minecraft:in_dimension",
+        "dimension": "minecraft:overworld"
+      },
+      "weight": 2
+    }
+  ]
+}
