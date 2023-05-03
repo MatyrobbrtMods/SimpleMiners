@@ -10,11 +10,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.List;
+import java.util.function.Supplier;
 
-public record InBiomePredicate(HolderSet<Biome> biomes) implements ResultPredicate {
+public record InBiomePredicate(Supplier<HolderSet<Biome>> biomes) implements ResultPredicate {
+    public InBiomePredicate(HolderSet<Biome> biomes) {
+        this(() -> biomes);
+    }
     @Override
     public boolean canProduce(MinerBE miner) {
-        return biomes.contains(miner.getLevel().getBiome(miner.getBlockPos()));
+        return biomes.get().contains(miner.getLevel().getBiome(miner.getBlockPos()));
     }
 
     @Override
@@ -24,6 +28,6 @@ public record InBiomePredicate(HolderSet<Biome> biomes) implements ResultPredica
 
     @Override
     public List<Component> getDescription() {
-        return List.of(Translations.IN_BIOME_PREDICATE.get(Utils.humanReadableHolderSet(biomes).copy().withStyle(ChatFormatting.GOLD)));
+        return List.of(Translations.IN_BIOME_PREDICATE.get(Utils.humanReadableHolderSet(biomes.get()).copy().withStyle(ChatFormatting.GOLD)));
     }
 }

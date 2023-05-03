@@ -7,7 +7,9 @@ import com.matyrobbrt.simpleminers.miner.MinerType;
 import com.matyrobbrt.simpleminers.util.JsonBuilder;
 import com.matyrobbrt.simpleminers.util.pack.BuiltInPacksRepository;
 import com.matyrobbrt.simpleminers.util.pack.SimpleMinersRepositorySource;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -84,5 +86,9 @@ public class SimpleMinersClient {
         if (minerType.translation() != null) {
             DynamicAssetsRP.INSTANCE.getLang("en_us").put(minerType.block().getDescriptionId(), minerType.translation());
         }
+    }
+
+    public static RegistryAccess registryAccess() {
+        return Minecraft.getInstance().level.registryAccess();
     }
 }

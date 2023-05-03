@@ -44,7 +44,7 @@ public interface ResultPredicate {
     }
 
     static ResultPredicate inBiome(HolderSet<Biome> biomes) {
-        return new InBiomePredicate(biomes);
+        return new InBiomePredicate(() -> biomes);
     }
     static ResultPredicate inDimension(ResourceKey<Level> dimension) {
         return new InDimensionPredicate(dimension);

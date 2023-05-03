@@ -37,7 +37,7 @@ public final class ResultPredicates {
     public static final Codec<ResultPredicate> FALSE_CODEC = register("false", Codec.unit(FALSE));
 
     public static final Codec<InBiomePredicate> IN_BIOME_CODEC = register("in_biome", RecordCodecBuilder.create(in -> in.group(
-            Biome.LIST_CODEC.fieldOf("biomes").forGetter(InBiomePredicate::biomes)
+            Utils.lazyWithRegistryAccess(Biome.LIST_CODEC).fieldOf("biomes").forGetter(InBiomePredicate::biomes)
     ).apply(in, InBiomePredicate::new)));
 
     public static final Codec<AndPredicate> AND_CODEC = register("and", RecordCodecBuilder.create(in -> in.group(

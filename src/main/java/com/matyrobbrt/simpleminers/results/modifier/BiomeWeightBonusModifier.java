@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public record BiomeWeightBonusModifier(List<BonusEntry> bonuses) implements ResultModifier {
     @Override
@@ -22,7 +23,7 @@ public record BiomeWeightBonusModifier(List<BonusEntry> bonuses) implements Resu
         int weight = originalWeight;
 
         for (final BonusEntry bonus : bonuses) {
-            if (bonus.biomes().contains(biome)) {
+            if (bonus.biomes().get().contains(biome)) {
                 weight += bonus.bonus();
             }
         }
@@ -40,13 +41,16 @@ public record BiomeWeightBonusModifier(List<BonusEntry> bonuses) implements Resu
         return bonuses.stream()
                 .<Component>map(it -> Translations.BIOME_WEIGHT_BONUS.get(
                         Component.literal(Utils.intWithSign(it.bonus)).withStyle(ChatFormatting.AQUA),
-                        Utils.humanReadableHolderSet(it.biomes()).copy().withStyle(ChatFormatting.GOLD)
+                        Utils.humanReadableHolderSet(it.biomes().get()).copy().withStyle(ChatFormatting.GOLD)
                 )).toList();
     }
 
-    public record BonusEntry(HolderSet<Biome> biomes, int bonus) {
+    public record BonusEntry(Supplier<HolderSet<Biome>> biomes, int bonus) {
+        public BonusEntry(HolderSet<Biome> biomes, int bonus) {
+            this(() -> biomes, bonus);
+        }
         public static final Codec<BonusEntry> CODEC = RecordCodecBuilder.create(in -> in.group(
-                Biome.LIST_CODEC.fieldOf("biomes").forGetter(BonusEntry::biomes),
+                Utils.lazyWithRegistryAccess(Biome.LIST_CODEC).fieldOf("biomes").forGetter(BonusEntry::biomes),
                 Codec.INT.fieldOf("bonus").forGetter(BonusEntry::bonus)
         ).apply(in, BonusEntry::new));
     }

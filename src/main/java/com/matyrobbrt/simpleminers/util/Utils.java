@@ -1,23 +1,33 @@
 package com.matyrobbrt.simpleminers.util;
 
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonElement;
 import com.matyrobbrt.simplegui.util.Action;
 import com.matyrobbrt.simplegui.util.InteractionType;
+import com.matyrobbrt.simpleminers.client.SimpleMinersClient;
 import com.matyrobbrt.simpleminers.util.cap.SlotItemHandler;
 import com.mojang.datafixers.util.Either;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.registries.holdersets.AndHolderSet;
 import net.minecraftforge.registries.holdersets.CompositeHolderSet;
 import net.minecraftforge.registries.holdersets.NotHolderSet;
 import net.minecraftforge.registries.holdersets.OrHolderSet;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Utils {
     @SuppressWarnings("deprecation")
@@ -126,4 +137,28 @@ public class Utils {
             consumer.accept(element);
         }
     }
+
+    public static RegistryAccess getRegistryAccess() {
+        if (FMLLoader.getDist() == Dist.DEDICATED_SERVER) {
+            return ServerLifecycleHooks.getCurrentServer().registryAccess();
+        }
+        return SimpleMinersClient.registryAccess();
+    }
+
+    public static <Z> Codec<Supplier<Z>> lazyWithRegistryAccess(Codec<Z> initialCodec) {
+        return new Codec<>() {
+            @Override
+            public <T> DataResult<T> encode(Supplier<Z> input, DynamicOps<T> ops, T prefix) {
+                return initialCodec.encode(input.get(), RegistryOps.create(ops, getRegistryAccess()), prefix);
+            }
+
+            @Override
+            public <T> DataResult<Pair<Supplier<Z>, T>> decode(DynamicOps<T> ops, T input) {
+                return DataResult.success(Pair.of(Suppliers.memoize(() ->
+                        initialCodec.decode(RegistryOps.create(ops, getRegistryAccess()), input)
+                                .get().orThrow().getFirst()), ops.empty()));
+            }
+        };
+    }
+
 }

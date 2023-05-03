@@ -44,7 +44,7 @@ public interface ResultModifier {
         return new BiomeWeightBonusModifier(List.of(entries));
     }
     static BiomeWeightBonusModifier biomeWeightBonus(HolderSet<Biome> biomes, int bonus) {
-        return biomeWeightBonus(new BiomeWeightBonusModifier.BonusEntry(biomes, bonus));
+        return biomeWeightBonus(new BiomeWeightBonusModifier.BonusEntry(() -> biomes, bonus));
     }
 
     static CatalystWeightBonusModifier catalystWeightBonus(CatalystWeightBonusModifier.Entry... entries) {
